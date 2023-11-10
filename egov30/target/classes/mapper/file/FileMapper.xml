@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gmx.fwd.mapper.file.FileMapper">
+	
+	
+    <insert id="saveFile" parameterType="gmx.fwd.vo.filevo.FileVO">
+         INSERT INTO 
+         	exam.files (post_id, file_name, file_path) 
+         VALUES 
+         	(#{postId}, #{fileName}, #{filePath})
+    </insert>
+    
+    <select id="getFileByPostId" parameterType="int" resultType="gmx.fwd.vo.filevo.FileVO">
+        SELECT * FROM 
+        	exam.files 
+        WHERE 
+        	post_id = #{postId}
+    </select>
+    
+    <select id="getFileByFileId" parameterType="int" resultType="gmx.fwd.vo.filevo.FileVO">
+        SELECT * FROM 
+        	exam.files 
+        WHERE 
+        	file_id = #{fileId}
+    </select>
+    
+    <delete id="deleteFile" parameterType='gmx.fwd.vo.filevo.FileVO'>
+    	DELETE FROM 
+    		exam.files 
+    	WHERE 
+    		file_id = #{fileId}
+    </delete>
+    
+</mapper>
