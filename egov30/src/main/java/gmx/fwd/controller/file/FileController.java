@@ -69,7 +69,7 @@ public class FileController {
 	@GetMapping("/deleteFile.do")
 	public String deleteFile(@RequestParam(name = "fileId") int fileId, @RequestParam(name = "postId") int postId, HttpSession session) {
 		String sessionEmail = (String) session.getAttribute("sessionEmail");
-		if (sessionEmail == null || !((postService.getWriterByPostId(postId)).equals(sessionEmail))) {
+		if (!(sessionEmail == null || !((postService.getWriterByPostId(postId)).equals(sessionEmail)))) {
 			fileService.deleteFile(fileId);
 		}
 		return "redirect:/post/detailPost.do?postId=" + postId;
