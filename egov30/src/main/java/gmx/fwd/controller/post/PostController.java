@@ -149,6 +149,7 @@ public class PostController {
 
 		if (viewSet.equals("yes")) {
 			postService.setView(postId);
+			return "redirect:detailPost.do?postId=" + postId; // 새로고침시 view 증가 방지
 		}
 
 		PostVO post = postService.detailViewbyPostId(postId);
