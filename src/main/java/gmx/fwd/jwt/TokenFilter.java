@@ -32,7 +32,11 @@ public class TokenFilter extends GenericFilterBean {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}
 		} catch (ExpiredJwtException e) {
-			// 만료된 토큰
+			System.out.println("token expired!!");
+	        	// 만료된 토큰
+	       		HttpServletResponse httpResponse = (HttpServletResponse) res;
+	        	httpResponse.sendRedirect("/user/logout.do"); // 리다이렉션 URL 설정
+	        	return; 
 		}
 		filterChain.doFilter(req, res);
 	}
