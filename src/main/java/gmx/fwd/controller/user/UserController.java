@@ -154,7 +154,7 @@ public class UserController {
 			return "login/login"; // fail
 		}
 	}*/
-	@PostMapping("/login.do")
+	@PostMapping("/login.do") 
     public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String password) {
 		System.out.println();
         try {
