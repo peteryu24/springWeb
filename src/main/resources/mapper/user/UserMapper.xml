@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gmx.fwd.mapper.user.UserMapper">
+	
+	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@ sql 조각 사용 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+	
+    <sql id="userTable">
+    	exam.users
+    </sql>
+    
+    <sql id="userInfo">
+		nickname, username, password, createTime
+	</sql>
+	
+	<sql id="userInfoList">
+	  (nickname, username, password, createTime)
+	</sql>
+	
+	<sql id="userInfoValues">
+	  (#{nickname}, #{username}, #{password}, #{createTime})
+	</sql>
+	
+	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@ sql 조각 사용 @@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+    <insert id="register" parameterType="gmx.fwd.vo.uservo.UserVO">
+        INSERT INTO 
+        	<include refid="userTable"/> 
+        	<include refid="userInfoList"/> 
+        VALUES 
+        	<include refid="userInfoValues"/>
+    </insert>
+    
+    <select id="login" parameterType="map" resultType="gmx.fwd.vo.uservo.UserVO">
+	    SELECT 
+	    	<include refid="userInfo"/> 
+	    FROM 
+	    	<include refid="userTable"/> 
+	    WHERE 
+	    	username = #{username} 
+	    AND 
+	    	password = #{password}
+	</select>
+	
+	<select id="securityLogin" parameterType="string" resultType="gmx.fwd.vo.uservo.UserVO">
+	    SELECT 
+	        <include refid="userInfo"/> 
+	    FROM 
+	        <include refid="userTable"/> 
+	    WHERE 
+	        username = #{username}
+	</select>
+    
+    <delete id="unregisterUser" parameterType='gmx.fwd.vo.uservo.UserVO'>
+    	DELETE FROM 
+    		<include refid="userTable"/> 
+    	WHERE 
+    		username = #{username}
+    </delete>
+    
+    <select id="getByUsername" parameterType="String" resultType="gmx.fwd.vo.uservo.UserVO">
+        SELECT 
+        	<include refid="userInfo"/> 
+        FROM 
+        	<include refid="userTable"/> 
+        WHERE 
+        	username = #{username}
+    </select> 
+    
+    <update id="changePassword" parameterType='gmx.fwd.vo.uservo.UserVO'>
+	    UPDATE 
+	    	<include refid="userTable"/> 
+	    SET 
+	    	password = #{password} 
+	    WHERE 
+	    	username = #{username}
+	</update>
+	
+</mapper>

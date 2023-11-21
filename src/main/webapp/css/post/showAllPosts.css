@@ -1,0 +1,108 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#postList {
+    width: 70%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.firstRowButtonGroup {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin-top: 20px;
+}
+
+.firstRowButtonGroup button {
+	width: 23%;
+	padding: 10px;
+	margin-right: 10px; /* 버튼 사이 간격 조절 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #007BFF;
+    color: #fff;
+}
+
+.writePost:hover, .changePassword:hover, .logOut:hover {
+    background-color: #0056b3;
+}
+
+.unRegister:hover {
+    background-color: #c9302c;
+}
+      
+.secondRowButtonGroup {
+    width: 70%;
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 20px;
+}
+
+.secondRowButtonGroup button {
+    width: 23%;
+    padding: 10px;
+    margin-right: 10px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #007BFF;
+    color: #fff;
+}
+
+
+.viewMap:hover, .viewLog:hover {
+    background-color: #0056b3;
+}
+#unvisibleButton1, #unvisibleButton2 {
+    background-color: transparent; /* 배경색 투명 */
+	color: transparent; /* 글자색 투명 */
+	border: none; 
+	cursor: default; 
+	pointer-events: none; /* 마우스 이벤트 무시 */
+}			
+      
+	.detailPost , #sortButton, #searchButton{
+	width: auto; 
+	padding: 5px 10px; 
+	margin-right: 10px; 
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	background-color: #888; /* 어두운 회색 배경색 */
+	color: #fff;
+}
+
+.detailPost:hover, sortButton:hover , searchButton:hover{
+    background-color: #ccc; /* 얕은 회색 */
+}
+
+.pageNumber:hover {
+    color: red;
+    cursor: pointer;
+}

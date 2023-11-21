@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gmx.fwd.mapper.comment.CommentMapper">
+
+    <insert id="writeComment" parameterType="gmx.fwd.vo.commentvo.CommentVO">
+        INSERT INTO 
+        	exam.comments (username, post_id, comment) 
+        VALUES 	
+        	(#{username}, #{postId}, #{comment})
+    </insert>
+    
+    <update id="changeComment" parameterType="gmx.fwd.vo.commentvo.CommentVO">
+	    UPDATE 
+	    	exam.comments 
+	    SET 
+	    	comment = #{comment} 
+	    WHERE 	
+	    	comment_id = #{commentId}
+	</update>
+
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM 
+        	exam.comments 
+        WHERE 	
+        	comment_id = #{commentId}
+    </delete>
+	
+	<select id="getCommentsByPostId" parameterType="int" resultType="gmx.fwd.vo.commentvo.CommentVO">
+        SELECT * FROM 
+        	exam.comments 
+        WHERE 
+        	post_id = #{postId}
+    </select>
+    
+    <select id="getCommentByCommentId" parameterType="int" resultType="gmx.fwd.vo.commentvo.CommentVO">
+        SELECT * FROM 
+        	exam.comments 
+        WHERE 	
+        	comment_id = #{commentId}
+    </select>
+    
+    <select id="getWriterByCommentId" parameterType="int" resultType="String">
+        SELECT 
+        	email 
+        FROM 
+        	exam.comments 
+        WHERE 
+        	comment_id = #{commentId}
+    </select>
+    
+</mapper>
+

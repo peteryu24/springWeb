@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gmx.fwd.mapper.log.LogMapper">
+
+
+	<insert id="writeLog" parameterType="gmx.fwd.vo.logvo.LogVO">
+		INSERT INTO
+			exam.logs
+				(category, username, activity)
+		VALUES
+			(#{category}, #{username}, #{activity})
+	</insert>
+
+	<select id="logsPerPage" parameterType="int" resultType="gmx.fwd.vo.logvo.LogVO">
+	    SELECT
+	        exam.logs.*
+	    FROM
+	        exam.logs
+	    WHERE 
+	        (#{category} = 0 OR exam.logs.category = #{category})
+	    ORDER BY
+	        exam.logs.log_id DESC
+	    LIMIT
+	        10
+	    OFFSET
+	        #{start}
+	</select>
+
+
+
+	<select id="getLogCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			exam.logs
+	</select>
+	
+	<select id="getLogCountByCategory" parameterType="int" resultType="int">
+	    SELECT
+	        COUNT(*)
+	    FROM
+	        exam.logs
+	    WHERE
+	        (CAST(#{category} AS smallint) = 0 OR exam.logs.category = CAST(#{category} AS smallint))
+	</select>
+
+
+	<delete id="deleteOldestLog">
+		DELETE FROM 
+			exam.logs 
+		WHERE 
+			exam.logs.log_id=(
+				SELECT MIN 
+					( log_id ) 
+				FROM 
+					exam.logs 
+			);
+	</delete>
+
+
+
+</mapper>
