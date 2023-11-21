@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gmx.fwd.mapper.post.PostMapper">
+
+	<insert id="writePost" parameterType="gmx.fwd.vo.postvo.PostVO">
+		INSERT INTO 
+			exam.posts (username, title, content) 
+		VALUES 
+			(#{email}, #{title},#{content})
+	</insert>
+
+	<select id="detailViewbyPostId" parameterType="Integer"
+		resultType="gmx.fwd.vo.postvo.PostVO">
+		SELECT * FROM 
+			exam.posts 
+		WHERE 
+			post_id = #{postId}
+	</select>
+
+	<select id="getPostIdByTitle" parameterType="String"
+		resultType="int">
+		SELECT 
+			post_id 
+		FROM 
+			exam.posts 
+		WHERE 
+			title = #{title}
+	</select>
+
+	<select id="selectPostInOrder" parameterType="map"
+		resultType="gmx.fwd.vo.postvo.PostVO">
+		SELECT
+			exam.posts.*,
+		CASE WHEN 
+			exam.files.post_id 
+		IS NOT NULL THEN TRUE ELSE FALSE END AS
+			hasFile <!-- 파일 존재 여부 파악. boolean 타입의 hasFile로 리턴 -->
+		FROM
+			exam.posts
+		LEFT JOIN<!-- 파일이 없어도 게시물은 가져오기 위해 LEFT JOIN -->
+			exam.files
+		ON
+			exam.posts.post_id = exam.files.post_id <!-- 해당 게시글에 첨부 파일이 있는 경우 -->
+		WHERE
+        	exam.posts.title LIKE CONCAT('%', #{searchedKeyword, jdbcType=VARCHAR}, '%')
+        	
+			<choose>
+				<when test="orderBy == 'postId'">
+					ORDER BY 
+						exam.posts.post_id DESC
+				</when>
+				<when test="orderBy == 'view'">
+					ORDER BY 
+						exam.posts.view DESC
+				</when>
+			</choose>
+			LIMIT 
+				5 
+			OFFSET 
+				#{start}
+	</select>
+
+	<select id="getPostCount" resultType="int">
+		SELECT 
+			count(*) 
+		FROM 
+			exam.posts
+	</select>
+	
+	<select id="searchPostCount" parameterType = "String" resultType="int">
+		SELECT 
+			count(*) 
+		FROM 
+			exam.posts 
+		WHERE 
+			title 
+		LIKE 
+			CONCAT('%' , #{keyword}, '%')
+	</select>
+
+	<select id="getPostByPostId" parameterType="int"
+		resultType="gmx.fwd.vo.postvo.PostVO">
+		SELECT * FROM 
+			exam.posts 
+		WHERE 
+			post_id = #{postId}
+	</select>
+
+	<update id="changeContent"
+		parameterType='gmx.fwd.vo.postvo.PostVO'>
+		UPDATE 
+			exam.posts 
+		SET 
+			content = #{content} 
+		WHERE 
+			title = #{title}
+	</update>
+
+	<update id="setView" parameterType='gmx.fwd.vo.postvo.PostVO'>
+		UPDATE 
+			exam.posts 
+		SET 
+			view = #{view} 
+		WHERE 
+			post_id = #{postId}
+	</update>
+
+	<delete id="deletePost" parameterType='gmx.fwd.vo.postvo.PostVO'>
+		DELETE FROM 
+			exam.posts 
+		WHERE 
+			post_id = #{postId}
+	</delete>
+	
+	<select id="getWriterByPostId" parameterType="int"
+		resultType="String">
+		SELECT 
+			username 
+		FROM 
+			exam.posts 
+		WHERE 
+			post_id = #{postId}
+	</select>
+</mapper>
+
+
