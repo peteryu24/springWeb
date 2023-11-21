@@ -5,7 +5,7 @@
 <head>
 	<script src="../js/post/pageController.js"></script>
 	<meta charset="UTF-8">
-	<base href="http://localhost:8080/yellowAsian/">
+	<base href="http://localhost:8080/egov11/">
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<title>Show Logs</title>
 	<style>
@@ -160,7 +160,7 @@
 				let $td = $('<td>');
 
 				$tr.append($td.clone().text(category));
-				$tr.append($td.clone().text(log.email));
+				$tr.append($td.clone().text(log.username));
 				$tr.append($td.clone().text(log.activity));
 				$tr.append($td.clone().text(createTime));
 				tbody.append($tr);
