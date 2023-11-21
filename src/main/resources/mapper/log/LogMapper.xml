@@ -9,7 +9,7 @@
 			exam.logs
 				(category, username, activity)
 		VALUES
-			(#{category}, #{email}, #{activity})
+			(#{category}, #{username}, #{activity})
 	</insert>
 
 	<select id="logsPerPage" parameterType="int" resultType="gmx.fwd.vo.logvo.LogVO">
