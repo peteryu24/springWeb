@@ -15,6 +15,7 @@
 		<config>src/main/resources/gmx/context/context-mapper.xml</config>
 		<config>src/main/resources/gmx/context/context-transaction.xml</config>
 		<config>src/main/resources/gmx/context/context-properties.xml</config>
+		<config>src/main/resources/gmx/context/context-security.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>
