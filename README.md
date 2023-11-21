@@ -1,4 +1,4 @@
-Authentication auth = tokenProvider.getAuthentication(token);
+## Authentication auth = tokenProvider.getAuthentication(token);
 <br>
 Authentication: 
 <br>
