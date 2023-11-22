@@ -2,10 +2,10 @@ package gmx.fwd.controller.post;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,20 +41,19 @@ public class PostController {
 	 * produces = "application/json"을 @RequestMapping에 추가할 수도 있음(json 전송시)
 	 * 
 	 * 클라이언트에게 직접 데이터를 전송해야할 때 유용하게 사용
-	 */	
+	 */
 	@ResponseBody
 	@GetMapping(value = "/showPosts.do", produces = "application/json")
-	public HashMap<String, Object> showPosts(
-	        @RequestParam(name = "sortType", defaultValue = "최신순", required = false) String sortType,
-	        @RequestParam(name = "currentPage", defaultValue = "1", required = false) int currentPage,
-	        @RequestParam(name = "searchedKeyword", defaultValue = "") String searchedKeyword) {
+	public HashMap<String, Object> showPosts(@RequestParam(name = "sortType", defaultValue = "최신순", required = false) String sortType,
+			@RequestParam(name = "currentPage", defaultValue = "1", required = false) int currentPage,
+			@RequestParam(name = "searchedKeyword", defaultValue = "") String searchedKeyword) {
 
 		HashMap<String, Object> response = new HashMap<>();
-		
-	    response.put("posts", postService.selectPostInOrder(currentPage, sortType, searchedKeyword));
-	    response.put("totalPage", postService.getSearchedPostCount(searchedKeyword));
 
-	    return response;
+		response.put("posts", postService.selectPostInOrder(currentPage, sortType, searchedKeyword));
+		response.put("totalPage", postService.getSearchedPostCount(searchedKeyword));
+
+		return response;
 	}
 
 	// 게시글을 전체 보여주는 페이지로 단순 리다이렉트
@@ -85,12 +84,13 @@ public class PostController {
 	 */
 	@PostMapping(value = "/writePost.do", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public String writePost(@RequestParam String title, @RequestParam String content, @RequestParam("uploadFile") MultipartFile mpartFile,
-			HttpSession session, Model model) {
+			Model model) {
 
-		String email = (String) session.getAttribute("sessionEmail");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserName = authentication.getName();
 
 		try {
-			postService.writePost(email, title, content, mpartFile);
+			postService.writePost(currentUserName, title, content, mpartFile);
 			String writeFlag = "yes";
 			return "redirect:goShowAllPosts.do?writeFlag=" + writeFlag;
 		} catch (Exception e) {
@@ -121,18 +121,18 @@ public class PostController {
 	 * 새로고침시에도 조회수 어뷰징 불가
 	 */
 	@GetMapping("/detailPost.do")
-	public String detailViewbyTitle(@RequestParam("postId") int postId,
-			@RequestParam(name = "viewSet", defaultValue = "no") String viewSet, Model model) {
-		
+	public String detailViewbyTitle(@RequestParam("postId") int postId, @RequestParam(name = "viewSet", defaultValue = "no") String viewSet,
+			Model model) {
+
 		if (viewSet.equals("yes")) {
 			postService.setView(postId); // 조회수 증가 로직
 			return "redirect:detailPost.do?postId=" + postId; // 새로고침시 view 증가 방지
 		}
-	
+
 		model.addAttribute("post", postService.detailViewbyPostId(postId));
 		model.addAttribute("comments", commentService.getCommentsByPostId(postId));
 		model.addAttribute("file", fileService.getFileByPostId(postId));
-	
+
 		return "post/detailPost";
 	}
 
@@ -143,11 +143,14 @@ public class PostController {
 	 */
 	@ResponseBody
 	@GetMapping(value = "/checkAvailabilityToChangePost.do")
-	public HashMap<String, Object> checkAvailabilityToChangePost(@RequestParam(name = "postId") int postId, HttpSession session) {
-		String sessionEmail = (String) session.getAttribute("sessionEmail");
+	public HashMap<String, Object> checkAvailabilityToChangePost(@RequestParam(name = "postId") int postId) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserName = authentication.getName();
+
 		HashMap<String, Object> response = new HashMap<>();
 
-		if (sessionEmail == null || !((postService.getWriterByPostId(postId)).equals(sessionEmail))) { // 세션이 없거나, 작성자가 아닐 경우
+		if (currentUserName == null || !((postService.getWriterByPostId(postId)).equals(currentUserName))) { // 세션이 없거나, 작성자가 아닐 경우
 			response.put("status", "fail");
 			return response;
 		}
@@ -158,8 +161,8 @@ public class PostController {
 	}
 
 	@GetMapping("/goChangePost.do")
-	public String goChangePost(@RequestParam int postId, Model model) {	
-		model.addAttribute("postId", postId); // 컨트롤러와 뷰 사이 데이터를 전달하는 Model	
+	public String goChangePost(@RequestParam int postId, Model model) {
+		model.addAttribute("postId", postId); // 컨트롤러와 뷰 사이 데이터를 전달하는 Model
 		return "post/changePost";
 	}
 
@@ -200,12 +203,14 @@ public class PostController {
 	 */
 	@ResponseBody
 	@GetMapping("/deletePost.do")
-	public HashMap<String, Object> deletePost(@RequestParam(name = "postId") int postId, HttpSession session) {
+	public HashMap<String, Object> deletePost(@RequestParam(name = "postId") int postId) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUserName = authentication.getName();
 
-		String sessionEmail = (String) session.getAttribute("sessionEmail");
 		HashMap<String, Object> response = new HashMap<>();
 
-		if (sessionEmail == null || !((postService.getWriterByPostId(postId)).equals(sessionEmail))) { // 세션이 없거나, 작성자가 아닐 경우
+		if (currentUserName == null || !((postService.getWriterByPostId(postId)).equals(currentUserName))) { // 세션이 없거나, 작성자가 아닐 경우
 			response.put("status", "fail");
 			return response;
 		}
