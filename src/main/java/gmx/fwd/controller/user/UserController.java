@@ -2,14 +2,14 @@ package gmx.fwd.controller.user;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpSession;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -173,8 +173,7 @@ public class UserController {
 	 * 로그인 화면으로 이동(첫 화면)
 	 */
 	@GetMapping("/logout.do")
-	public String logout(HttpSession session) {
-		session.invalidate(); // 세션 종료
+	public String logout() {
 		return "login/login";
 	}
 
@@ -195,16 +194,16 @@ public class UserController {
 	 */
 	@PostMapping("/changePasswordAction.do")
 	public String changePasswordAction(@RequestParam(name = "currentPassword") String currentPassword,
-			@RequestParam(name = "newPassword") String newPassword, @RequestParam(name = "confirmNewPassword") String confirmNewPassword,
-			HttpSession session) {
+			@RequestParam(name = "newPassword") String newPassword, @RequestParam(name = "confirmNewPassword") String confirmNewPassword) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUsername = authentication.getName();
 
-		String email = (String) session.getAttribute("sessionEmail");
-
-		if (email == null) {
+		if (currentUsername == null) {
 			return "errorPage";
 		}
 
-		if (userService.changePassword(email, currentPassword, newPassword, confirmNewPassword)) {
+		if (userService.changePassword(currentUsername, currentPassword, newPassword, confirmNewPassword)) {
 			return "post/showAllPosts";
 		} else {
 			return "login/changePassword";
@@ -220,14 +219,14 @@ public class UserController {
 	 * isFlag로 성공 여부 판단
 	 */
 	@GetMapping("/unregister.do")
-	public String unregister(HttpSession session) {
+	public String unregister() {
 		
-		String email = (String) session.getAttribute("sessionEmail");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUsername = authentication.getName();
 
-		if (email != null) {
+		if (currentUsername != null) {
 
-			if (userService.unregisterUser(email)) {
-				session.invalidate();
+			if (userService.unregisterUser(currentUsername)) {
 				return "login/login";
 			}
 		}
