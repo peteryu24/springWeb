@@ -42,7 +42,7 @@
     
     <select id="getWriterByCommentId" parameterType="int" resultType="String">
         SELECT 
-        	email 
+        	username 
         FROM 
         	exam.comments 
         WHERE 
