@@ -36,9 +36,9 @@ public class UserService {
 	 * HashMap에 email과 password를 넣음
 	 * 해당 HashMap을 @UserMapper로 념겨주어 쿼리문 실행
 	 */
-	public UserVO login(String email, String password) {
+	public UserVO login(String username, String password) {
 		Map<String, String> userInfo = new HashMap<>();
-		userInfo.put("email", email);
+		userInfo.put("username", username);
 		userInfo.put("password", password);
 
 		return userMapper.login(userInfo);
@@ -66,8 +66,8 @@ public class UserService {
 	 * int 타입으로 반환됨
 	 * 에러 처리는 controller에서 다시
 	 */
-	public boolean changePassword(String email, String currentPassword, String newPassword, String confirmNewPassword) {
-		UserVO user = getByUsername(email);
+	public boolean changePassword(String username, String currentPassword, String newPassword, String confirmNewPassword) {
+		UserVO user = getByUsername(username);
 
 		// whiteList
 		if (user == null)
@@ -88,7 +88,7 @@ public class UserService {
 	 * 
 	 *  int형 반환되고 @UserController에 boolean으로 반환
 	 */
-	public boolean unregisterUser(String email) {
-		return userMapper.unregisterUser(email) > 0;
+	public boolean unregisterUser(String username) {
+		return userMapper.unregisterUser(username) > 0;
 	}
 }

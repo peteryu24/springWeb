@@ -14,12 +14,12 @@ public class CommentService {
 	@Autowired
 	CommentMapper commentMapper;
 
-	public boolean writeComment(String comment, int postId, String email) {
+	public boolean writeComment(String comment, int postId, String username) {
 		CommentVO commentvo = new CommentVO();
 		
 		commentvo.setComment(comment);
 		commentvo.setPostId(postId);		
-		commentvo.setUsername(email);		
+		commentvo.setUsername(username);		
 		
 		boolean result = false;
 		
