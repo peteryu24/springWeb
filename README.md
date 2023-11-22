@@ -27,3 +27,8 @@ Authenticated: true;
 Details: null; 
 <br>
 Granted Authorities: ROLE_USER
+
+<br><br>
+https://jake-seo-dev.tistory.com/59
+<br>
+javadoc
