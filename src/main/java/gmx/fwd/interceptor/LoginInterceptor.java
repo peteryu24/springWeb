@@ -1,4 +1,4 @@
-package gmx.fwd.interceptor;
+/*package gmx.fwd.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,3 +17,4 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 }
+*/
