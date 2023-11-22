@@ -8,7 +8,7 @@ CREATE TABLE exam.files
   CONSTRAINT files_post_id_fkey FOREIGN KEY (post_id)
       REFERENCES exam.posts (post_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE CASCADE
-);
+); 
 COMMENT ON TABLE exam.files IS '파일 업로드 테이블';
 COMMENT ON COLUMN exam.files.file_id IS '파일 식별 id';
 COMMENT ON COLUMN exam.files.post_id IS '관련 게시물 id';
