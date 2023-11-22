@@ -7,7 +7,7 @@
         INSERT INTO 
         	exam.comments (username, post_id, comment) 
         VALUES 	
-        	(#{username}, #{postId}, #{comment})
+        	(#{username}, #{postId}, #{comment}) 
     </insert>
     
     <update id="changeComment" parameterType="gmx.fwd.vo.commentvo.CommentVO">
