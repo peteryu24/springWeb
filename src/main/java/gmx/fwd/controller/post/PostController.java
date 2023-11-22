@@ -87,10 +87,10 @@ public class PostController {
 			Model model) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentUserName = authentication.getName();
+		String currentUsername = authentication.getName();
 
 		try {
-			postService.writePost(currentUserName, title, content, mpartFile);
+			postService.writePost(currentUsername, title, content, mpartFile);
 			String writeFlag = "yes";
 			return "redirect:goShowAllPosts.do?writeFlag=" + writeFlag;
 		} catch (Exception e) {
@@ -146,11 +146,11 @@ public class PostController {
 	public HashMap<String, Object> checkAvailabilityToChangePost(@RequestParam(name = "postId") int postId) {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentUserName = authentication.getName();
+		String currentUsername = authentication.getName();
 
 		HashMap<String, Object> response = new HashMap<>();
 
-		if (currentUserName == null || !((postService.getWriterByPostId(postId)).equals(currentUserName))) { // 세션이 없거나, 작성자가 아닐 경우
+		if (currentUsername == null || !((postService.getWriterByPostId(postId)).equals(currentUsername))) { // 세션이 없거나, 작성자가 아닐 경우
 			response.put("status", "fail");
 			return response;
 		}
@@ -206,11 +206,11 @@ public class PostController {
 	public HashMap<String, Object> deletePost(@RequestParam(name = "postId") int postId) {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentUserName = authentication.getName();
+		String currentUsername = authentication.getName();
 
 		HashMap<String, Object> response = new HashMap<>();
 
-		if (currentUserName == null || !((postService.getWriterByPostId(postId)).equals(currentUserName))) { // 세션이 없거나, 작성자가 아닐 경우
+		if (currentUsername == null || !((postService.getWriterByPostId(postId)).equals(currentUsername))) { // 세션이 없거나, 작성자가 아닐 경우
 			response.put("status", "fail");
 			return response;
 		}
