@@ -12,18 +12,18 @@
     <http auto-config="true">
     	<csrf disabled="true"/>
     	<security:custom-filter ref="tokenFilter" before="FORM_LOGIN_FILTER"/>
+        <!-- 인터셉트 URL 설정 -->
+        <intercept-url pattern="/user/**" access="permitAll" />
+        <intercept-url pattern="/js/**" access="permitAll" />
+        <intercept-url pattern="/css/**" access="permitAll" />
+        <intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+        <!-- auto-config false로 설정시 access="ROLE_USER" -->
         <!-- 사용자 정의 로그인 페이지 -->
         <form-login login-page="/user/welcomePage.do" login-processing-url="/user/login.do" 
         	authentication-success-handler-ref="myAuthenticationSuccessHandler"
         	default-target-url="/post/goShowAllPosts.do" authentication-failure-url="/user/logoutFail.do" />
         <!-- 로그아웃 설정 -->
         <logout logout-success-url="/user/logout.do" />
-        <!-- 인터셉트 URL 설정 -->
-        <intercept-url pattern="/user/**" access="permitAll" />
-        <intercept-url pattern="/js/**" access="permitAll" />
-        <intercept-url pattern="/css/**" access="permitAll" />
-        <intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-        <!-- false로 설정시 access="ROLE_USER" -->
     </http>
 
     <!-- 인메모리 사용자 설정 -->
