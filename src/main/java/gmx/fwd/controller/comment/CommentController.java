@@ -2,9 +2,9 @@ package gmx.fwd.controller.comment;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,14 +43,14 @@ public class CommentController {
 	 */
 	@ResponseBody
 	@PostMapping("/writeComment.do")
-	public HashMap<String, String> writeComment(@RequestParam(name = "postId") int postId, @RequestParam(name = "comment") String comment,
-			HttpSession session) {
+	public HashMap<String, String> writeComment(@RequestParam(name = "postId") int postId, @RequestParam(name = "comment") String comment) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUsername = authentication.getName();
 
 		HashMap<String, String> response = new HashMap<>();
 
-		String email = (String) session.getAttribute("sessionEmail");
-
-		boolean result = commentService.writeComment(comment, postId, email);
+		boolean result = commentService.writeComment(comment, postId, currentUsername);
 
 		if (result) {
 			response.put("status", "success");
@@ -63,11 +63,14 @@ public class CommentController {
 	@ResponseBody
 	@GetMapping(value = "/checkAvailabilityToChangeComment.do")
 	public HashMap<String, Object> checkAvailabilityToChangeComment(@RequestParam(name = "commentId") int commentId,
-			@RequestParam int postId, HttpSession session) {
-		String sessionEmail = (String) session.getAttribute("sessionEmail");
+			@RequestParam int postId) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUsername = authentication.getName();
+		
 		HashMap<String, Object> response = new HashMap<>();
 
-		if (sessionEmail == null || !((commentService.getWriterByCommentId(commentId)).equals(sessionEmail))) { // 세션이 없거나, 작성자가 아닐 경우
+		if (currentUsername == null || !((commentService.getWriterByCommentId(commentId)).equals(currentUsername))) { // 세션이 없거나, 작성자가 아닐 경우
 			response.put("status", "fail");
 			return response;
 		}
@@ -125,11 +128,14 @@ public class CommentController {
 	 */
 	@ResponseBody
 	@GetMapping("/deleteComment.do")
-	public HashMap<String, Object> deleteComment(@RequestParam(name = "commentId") int commentId, @RequestParam(name = "postId") int postId, HttpSession session) {
+	public HashMap<String, Object> deleteComment(@RequestParam(name = "commentId") int commentId, @RequestParam(name = "postId") int postId) {
 		
-		String sessionEmail = (String) session.getAttribute("sessionEmail");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUsername = authentication.getName();
+		
 		HashMap<String, Object> response = new HashMap<>();
-		if (sessionEmail == null || !((commentService.getWriterByCommentId(commentId)).equals(sessionEmail))) { // 세션이 없거나, 작성자가 아닐 경우
+		
+		if (currentUsername == null || !((commentService.getWriterByCommentId(commentId)).equals(currentUsername))) { // 세션이 없거나, 작성자가 아닐 경우
 			response.put("status", "fail");
 			return response;
 		}
