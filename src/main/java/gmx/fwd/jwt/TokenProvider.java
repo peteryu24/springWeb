@@ -28,7 +28,7 @@ public class TokenProvider {
 	@Value("${security.jwt.token.secret-key:secret-key}")
 	private String secretKey;
 
-	@Value("${security.jwt.token.expire-length:300000}") // 5 min
+	@Value("${security.jwt.token.expire-length:300000}") // 5min
 	private long validityInMilliseconds;
 
 	@PostConstruct
@@ -36,7 +36,8 @@ public class TokenProvider {
 		// secret 키 초기화
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
-
+	
+	//JWT 생성 / 검증 시 init에서 인코딩 한 Secret Key를 Base64 디코딩하여 사용
 	public String createToken(String username, String role) { // 토큰 생성
 
 		Claims claims = Jwts.claims().setSubject(username);
@@ -44,9 +45,15 @@ public class TokenProvider {
 
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + validityInMilliseconds);
+		
+		byte[] decodedSecretKey = Base64.getDecoder().decode(secretKey);
 
-		return Jwts.builder().setClaims(claims).setIssuedAt(now).setExpiration(validity).signWith(SignatureAlgorithm.HS256, secretKey)
-				.compact();
+		return Jwts.builder()
+					.setClaims(claims)
+					.setIssuedAt(now)
+					.setExpiration(validity)
+					.signWith(SignatureAlgorithm.HS256, decodedSecretKey)
+				    .compact();
 	}
 	
 	private String getUsernameFromToken(String token) {
@@ -61,11 +68,13 @@ public class TokenProvider {
 	}
 	
 	public boolean validateToken(String token) {
-		try {
-			Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-			return true;
-		} catch (JwtException | IllegalArgumentException e) {
-			throw new JwtException("Expired or invalid JWT token");
-		}
+	    try {
+	    	byte[] decodedSecretKey = Base64.getDecoder().decode(secretKey);
+	        Jwts.parser().setSigningKey(decodedSecretKey).parseClaimsJws(token);
+	        return true;
+	    } catch (JwtException | IllegalArgumentException e) {
+	        throw new JwtException("Expired or invalid JWT token"); // 기타 JWT 관련 예외 처리
+	    }
 	}
+
 }
