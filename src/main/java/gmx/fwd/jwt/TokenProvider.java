@@ -30,14 +30,16 @@ public class TokenProvider {
 
 	@Value("${security.jwt.token.expire-length:300000}") // 5min
 	private long validityInMilliseconds;
+	
+	private String encodedSecretKey;
 
 	@PostConstruct
 	protected void init() {
-		// secret 키 초기화
-		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+		// secretKey 초기화
+		encodedSecretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 	
-	//JWT 생성 / 검증 시 init에서 인코딩 한 Secret Key를 Base64 디코딩하여 사용
+	//JWT 생성 / 검증 시 init에서 인코딩 한 secretKey를 Base64 디코딩하여 사용
 	public String createToken(String username, String role) { // 토큰 생성
 
 		Claims claims = Jwts.claims().setSubject(username);
@@ -46,7 +48,7 @@ public class TokenProvider {
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + validityInMilliseconds);
 		
-		byte[] decodedSecretKey = Base64.getDecoder().decode(secretKey);
+		byte[] decodedSecretKey = Base64.getDecoder().decode(encodedSecretKey);
 
 		return Jwts.builder()
 					.setClaims(claims)
@@ -57,8 +59,10 @@ public class TokenProvider {
 	}
 	
 	private String getUsernameFromToken(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-    }
+	    byte[] decodedSecretKey = Base64.getDecoder().decode(encodedSecretKey);
+	    return Jwts.parser().setSigningKey(decodedSecretKey).parseClaimsJws(token).getBody().getSubject();
+	}
+
 
 	public Authentication getAuthentication(String token) {
 		String username = getUsernameFromToken(token); // 토큰으로부터 사용자 이름 추출
@@ -69,7 +73,7 @@ public class TokenProvider {
 	
 	public boolean validateToken(String token) {
 	    try {
-	    	byte[] decodedSecretKey = Base64.getDecoder().decode(secretKey);
+	    	byte[] decodedSecretKey = Base64.getDecoder().decode(encodedSecretKey);
 	        Jwts.parser().setSigningKey(decodedSecretKey).parseClaimsJws(token);
 	        return true;
 	    } catch (JwtException | IllegalArgumentException e) {
