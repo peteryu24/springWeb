@@ -5,9 +5,10 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,10 +68,12 @@ public class FileController {
 	}
 
 	@GetMapping("/deleteFile.do")
-	public String deleteFile(@RequestParam(name = "fileId") int fileId, @RequestParam(name = "postId") int postId, HttpSession session) {
-		String sessionEmail = (String) session.getAttribute("sessionEmail");
+	public String deleteFile(@RequestParam(name = "fileId") int fileId, @RequestParam(name = "postId") int postId) {
 		
-		if (!(sessionEmail == null || !((postService.getWriterByPostId(postId)).equals(sessionEmail)))) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentUsername = authentication.getName();
+		
+		if (!(currentUsername == null || !((postService.getWriterByPostId(postId)).equals(currentUsername)))) {
 			fileService.deleteFile(fileId);
 		}
 		
