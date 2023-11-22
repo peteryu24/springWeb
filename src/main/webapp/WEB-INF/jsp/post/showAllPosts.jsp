@@ -4,9 +4,9 @@
 <head>
 	<script src="../js/post/pageController.js"></script>
     <meta charset="UTF-8">
-    <base href="http://localhost:8080/yellowAsian/">
+    <base href="http://localhost:8080/egov11/">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="/yellowAsian/css/post/showAllPosts.css">
+    <link rel="stylesheet" href="/egov11/css/post/showAllPosts.css">
     <title>Posts</title>
 </head>
 <body>
@@ -108,10 +108,11 @@
                     pageController.setTotalPage(fetchedTotalPage);
                     generatePageNumbers(fetchedTotalPage);
                 },
-                error: function(xhr, status, error) {
-                	alert("Error");
+                error: function(xhr, status, error) {          
+                	alert('Token Expired');
+                	logoutAndClearSession();
+                	console.log(xhr.reponseText);
                     console.log("Error: " + error);
-                    console.log(xhr.responseText);
                 }
             });
         }

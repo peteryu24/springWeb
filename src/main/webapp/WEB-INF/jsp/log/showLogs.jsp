@@ -4,10 +4,10 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<base href="http://localhost:8080/yellowAsian/">
-	<script src="/yellowAsian/js/post/pageController.js"></script>
+	<base href="http://localhost:8080/egov11/">
+	<script src="/egov11/js/post/pageController.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<link rel="stylesheet" href="/yellowAsian/css/log/showLogs.css">
+	<link rel="stylesheet" href="/egov11/css/log/showLogs.css">
 	<title>Show Logs</title>
 </head>
 <body>
@@ -70,9 +70,9 @@
 					generatePageNumbers(fetchedTotalPage);
 				},
 				error: function(xhr, status, error) {
-                	alert("Error");
-                    console.log("Error: " + error);
+                	alert('Token Expired');
                     console.log(xhr.responseText);
+                    window.location.href = 'user/logout.do';
                 }
 			});
 		}

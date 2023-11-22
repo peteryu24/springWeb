@@ -37,11 +37,11 @@ public class TokenFilter extends GenericFilterBean {
         } catch (JwtException e) {
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 상태 코드 설정
             httpResponse.getWriter().write("Unauthorized: " + e.getMessage());
-            return; // 필터 체인의 나머지 부분을 실행하지 않고 요청 처리 중단
+            return; 
         } catch (Exception e) {
             httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500 상태 코드 설정
             httpResponse.getWriter().write("Internal Server Error: " + e.getMessage());
-            return; // 마찬가지로 처리 중단
+            return; 
         }
     }
 

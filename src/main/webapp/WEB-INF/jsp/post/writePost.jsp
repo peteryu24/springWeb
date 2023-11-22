@@ -9,6 +9,9 @@
     <title>Write a Post</title>
     <script>
         $(document).ready(function() {
+        	
+        	let token = localStorage.getItem('jwtToken');
+        	
             $('#writePost').submit(function(e) {
                 e.preventDefault(); // 기본 폼 제출 방지
 
@@ -29,8 +32,9 @@
                         location.href = 'post/goShowAllPosts.do';
                     },
                     error: function(xhr, status, error) {
-                        alert("Error: " + error);
+                    	alert('Token Expired');
                         console.log(xhr.responseText);
+                        window.location.href = 'user/logout.do';
                     }
                 });
             });

@@ -4,9 +4,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <base href="http://localhost:8080/yellowAsian/">
+    <base href="http://localhost:8080/egov11/">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="/yellowAsian/css/comment/changeComment.css">
+    <link rel="stylesheet" href="/egov11/css/comment/changeComment.css">
     <title>Edit your Comment</title>
     <style>
         
@@ -31,11 +31,15 @@
     <script>
         function changeComment(event) {
             event.preventDefault();
-            var formData = $('#newComment').serialize();
+            let formData = $('#newComment').serialize();
+            let token = localStorage.getItem('jwtToken');
             $.ajax({
                 url: 'comment/changeComment.do',
                 type: 'POST',
                 data: formData,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
                 success: function(response) {
                     if(response.status === "success") {
                         alert("comment 변경 완료");
@@ -44,8 +48,10 @@
                         alert("Error");
                     }
                 },
-                error: function(error) {
-                    alert("Error: " + error);
+                error: function(xhr, status, error) {
+                	alert('Token Expired');
+                    console.log(xhr.responseText);
+                    window.location.href = 'user/logout.do';
                 }
             });
         }
