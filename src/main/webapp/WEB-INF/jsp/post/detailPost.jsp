@@ -6,9 +6,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<base href="http://localhost:8080/yellowAsian/">
+	<base href="http://localhost:8080/egov11/">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="/yellowAsian/css/post/detailPost.css">
+	<link rel="stylesheet" href="/egov11/css/post/detailPost.css">
 	<title>Detailed view of the Post</title>
 </head>
 <body>
@@ -71,7 +71,8 @@
 			onclick="location.href='post/goShowAllPosts.do'">Go Back</button>
 	</div>
 	<script>
-
+	let token = localStorage.getItem('jwtToken');
+	
     $('#editPostButton').click(function(){
         var postId = ${post.postId}; 
         $.ajax({
@@ -79,6 +80,9 @@
             type: 'GET',
             data: { postId: postId },
             dataType: 'json', 
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            },
             success: function(response){
                 if(response.status === 'success') {
                     window.location.href = response.redirect; // GET 방식
@@ -86,8 +90,10 @@
                     alert('권한이 없습니다.');
                 }
             },
-            error: function(){
-                alert('ajax 에러');
+            error: function(xhr, status, error) {
+            	alert('Token Expired');
+                console.log(xhr.responseText);
+                window.location.href = 'user/logout.do';
             }
         });
     });
@@ -100,6 +106,9 @@
                 postId: postId
             },
             dataType: 'json', 
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            },
             success: function(response){
                 if(response.status === 'success') {
                 	if(confirm('게시글을 삭제하시겠습니까?')) {
@@ -110,8 +119,10 @@
                     alert('권한이 없습니다.');
                 }
             },
-            error: function(){
-                alert('ajax 에러');
+            error: function(xhr, status, error) {
+            	alert('Token Expired');
+                console.log(xhr.responseText);
+                window.location.href = 'user/logout.do';
             }
         });       
 	}
@@ -125,6 +136,9 @@
                 postId: postId
             },
             dataType: 'json', 
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            },
             success: function(response){
                 if(response.status === 'success') {
                 	 window.location.href = response.redirect;
@@ -132,8 +146,10 @@
                 	alert('권한이 없습니다.');
                 }
             },
-            error: function(){
-            	alert('ajax 에러');
+            error: function(xhr, status, error) {
+            	alert('Token Expired');
+                console.log(xhr.responseText);
+                window.location.href = 'user/logout.do';
             }
         });
     }
@@ -147,6 +163,9 @@
 	            postId: postId
 	        },
 	        dataType: 'json', 
+	        beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+            },
 	        success: function(response){
 	            if(response.status === 'success') {
 	            	if(confirm('댓글을 삭제하시겠습니까?')) {
@@ -157,9 +176,11 @@
 	                alert('권한이 없습니다.');
 	            }
 	        },
-	        error: function(){
-	            alert('ajax 에러');
-	        }
+	        error: function(xhr, status, error) {
+            	alert('Token Expired');
+                console.log(xhr.responseText);
+                window.location.href = 'user/logout.do';
+            }
 	    });       
     }
 
