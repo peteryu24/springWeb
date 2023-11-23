@@ -8,11 +8,12 @@
 	<meta charset="UTF-8">
 	<base href="http://localhost:8080/egov11/">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 	<link rel="stylesheet" href="/egov11/css/post/detailPost.css">
 	<title>Detailed view of the Post</title>
 </head>
 <body>
-
+	<sec:csrfInput/>
 	<div class="postDetails">
 		<p>Title: ${post.title}</p>
 		<p>Content: ${post.content}</p>
@@ -68,13 +69,14 @@
 		<button class="deletePost" type="button"
 			onclick="deletePost(${post.postId})">Delete Post</button>
 		<button class="goBackButton" type="button"
-			onclick="location.href='post/goShowAllPosts.do'">Go Back</button>
+			onclick="location.href='post/goShowAllPosts.do'">Go Back</button> 
 	</div>
 	
 	<script>
 	
 	$(document).ready(function() {
 	    let token = localStorage.getItem('jwtToken');
+	    csrfToken = $("input[name='_csrf']").val();
 
 	    // 토큰이 없으면 로그인 페이지로 리디렉션
 	    if (!token) {
@@ -126,11 +128,14 @@
 	    function deletePost(postId) {
 	        $.ajax({
 	            url: 'post/deletePost.do', 
-	            type: 'GET',
+	            type: 'POST',
 	            data: {
 	                postId: postId
 	            },
 	            dataType: 'json', 
+	            beforeSend: function(xhr) {
+	                xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+	            },
 	            success: function(response){
 	                if(response.status === 'success') {
 	                	if(confirm('게시글을 삭제하시겠습니까?')) {
@@ -172,12 +177,15 @@
 	    function deleteComment(commentId, postId) {
 		    $.ajax({
 		        url: 'comment/deleteComment.do', 
-		        type: 'GET',
+		        type: 'POST',
 		        data: {
 		            commentId: commentId,
 		            postId: postId
 		        },
 		        dataType: 'json', 
+		        beforeSend: function(xhr) {
+	                xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+	            },
 		        success: function(response){
 		            if(response.status === 'success') {
 		            	if(confirm('댓글을 삭제하시겠습니까?')) {
@@ -191,7 +199,7 @@
 		        error: function(error) {
 	            	alert('ajax error', error);
 	            }
-		});       
+		    });       
 	    }
 
 	    
