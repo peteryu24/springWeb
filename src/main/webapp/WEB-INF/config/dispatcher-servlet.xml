@@ -64,12 +64,12 @@
     </bean> -->
     
     <!-- 파일 업로드를 위한 Multipart Resolver -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+<!-- 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	    <property name="maxUploadSize" value="10485760" />
 	    <property name="maxInMemorySize" value="1048576" />
 	    <property name="uploadTempDir" value="webapps/temp" />
 	    <property name="defaultEncoding" value="utf-8" />
-	</bean>
+	</bean> -->
     <!-- 자동으로 RequestMappingHandlerMapping, RequestMappingHandlerAdapter를 구성해줌 -->
     <!-- xml파일에 context:component-scan을 명시하면 아래 annotation-driven을 하지 않아도 MVC는 작동 -->
     <!-- @Controller에서 @RequestMapping등과 같은 주석을 통해 해당 기능을 사용할 수 있도록 해줌-->
