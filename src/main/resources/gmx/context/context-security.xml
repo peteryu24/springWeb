@@ -10,7 +10,7 @@
 
     <!-- HTTP 보안 설정 -->
     <http auto-config="true">
-    	<csrf disabled="true"/>
+    	<!-- <csrf disabled="true"/> -->
     	<security:custom-filter ref="tokenFilter" before="FORM_LOGIN_FILTER"/>
         <!-- 인터셉트 URL 설정 -->
         <intercept-url pattern="/user/**" access="permitAll" />

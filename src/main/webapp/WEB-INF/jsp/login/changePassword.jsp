@@ -3,13 +3,15 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<base href="http://localhost:8080/yellowAsian/">
-	<link rel="stylesheet" href="/yellowAsian/css/login/changePassword.css">
+	<base href="http://localhost:8080/egov11/">
+	<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+	<link rel="stylesheet" href="/egov11/css/login/changePassword.css">
 	<title>Change your Password</title>
 </head>
 <body>
     <div class="passwordContainer">
         <form action="user/changePasswordAction.do" method="post" onsubmit="return checkPassword()">
+        	<sec:csrfInput/>
             <div class="inputGroup">
                 <label for="currentPassword">Current Password</label>
                 <input type="password" id="currentPassword" name="currentPassword" required>
