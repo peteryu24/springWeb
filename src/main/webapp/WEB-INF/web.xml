@@ -33,6 +33,16 @@
 	</filter-mapping>
 	
 	<filter>
+	    <display-name>springMultipartFilter</display-name>
+	    <filter-name>springMultipartFilter</filter-name>
+	    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>springMultipartFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
 	    <filter-name>springSecurityFilterChain</filter-name>
 	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
@@ -41,7 +51,7 @@
 	    <filter-name>springSecurityFilterChain</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+	
     
     <!--  리스너 등록  -->
     <!--  서블릿과는 다르게 서블릿 컨테이너(tomcat)가 web.xml 파일을 읽어서 구동될 때 자동으로 메모리에 생성되는 갹체-->
