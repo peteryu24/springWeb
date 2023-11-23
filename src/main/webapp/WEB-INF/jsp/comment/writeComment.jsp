@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <base href="http://localhost:8080/egov11/">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <link rel="stylesheet" href="/egov11/css/comment/writeComment.css">
     <title>Write a Comment</title>
 </head>
@@ -14,6 +15,7 @@
     <div class="commentForm">
         <form id="writecommentForm" onsubmit="return writeComment(event)">
             <label for="comment">Submit your Comment</label>
+            <sec:csrfInput/>
             <!-- 숨겨서 전송 -->
             <input type="hidden" name="postId" value="${postId}"> 
             <input type="text" id="comment" name="comment" required="required">
