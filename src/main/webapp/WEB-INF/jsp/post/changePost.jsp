@@ -54,6 +54,7 @@
  	            window.location.href = 'user/logout.do'; 
  	        }
  	    });
+    });
 	
 		function checkContent() {
 		     var newContent = document.getElementById("newContent").value;
@@ -90,7 +91,7 @@
  	            }
 		     });
 		}
-    });
+
 
 
     </script>
