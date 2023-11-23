@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <base href="http://localhost:8080/egov11/">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <link rel="stylesheet" href="/egov11/css/comment/changeComment.css">
     <title>Edit your Comment</title>
     <style>
@@ -16,6 +17,7 @@
 
     <div class="commentForm">
         <form id="newComment" onsubmit="return changeComment(event)">
+        	<sec:csrfInput/>
             <input type="hidden" name="commentId" value="${commentId}">
             <input type="hidden" name="postId" value="${postId}">
 
