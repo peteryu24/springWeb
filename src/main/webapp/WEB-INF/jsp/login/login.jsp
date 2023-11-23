@@ -6,9 +6,10 @@
 
 <head>
 	<meta charset="UTF-8">
-	<base href="http://localhost:8080/yellowAsian/">
-	<script type="text/javascript" src="/yellowAsian/js/lib/jquery-3.2.0.min.js"></script>
-	<link rel="stylesheet" href="/yellowAsian/css/login/login.css">
+	<base href="http://localhost:8080/egov11/">
+	<script type="text/javascript" src="/egov11/js/lib/jquery-3.2.0.min.js"></script>
+	<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+	<link rel="stylesheet" href="/egov11/css/login/login.css">
     <title>Login Page</title>
 </head>
 
@@ -16,6 +17,7 @@
     <div class="loginContainer">
         <h1>Welcome</h1>
         <form id="loginForm">
+        	<sec:csrfInput/>
             <div class="inputGroup">
                 <label for="username">ID</label>
                 <input type="text" id="username" name="username" required="required">
@@ -38,10 +40,7 @@
 	    });
 	
 	    function login() {
-	        var formData = {
-	            'username': $('#username').val(),
-	            'password': $('#password').val()
-	        };
+	    	var formData = $('#loginForm').serialize();
 
 	        $.ajax({
 	            url: 'user/login.do',
