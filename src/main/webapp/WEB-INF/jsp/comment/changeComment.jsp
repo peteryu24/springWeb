@@ -29,32 +29,56 @@
     </div>
 
     <script>
-        function changeComment(event) {
-            event.preventDefault();
-            let formData = $('#newComment').serialize();
-            let token = localStorage.getItem('jwtToken');
-            $.ajax({
-                url: 'comment/changeComment.do',
-                type: 'POST',
-                data: formData,
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
-                },
-                success: function(response) {
-                    if(response.status === "success") {
-                        alert("comment 변경 완료");
-                        window.location.href = 'post/detailPost.do?postId=' + $('[name="postId"]').val();
-                    } else {
-                        alert("Error");
-                    }
-                },
-                error: function(xhr, status, error) {
-                	alert('Token Expired');
-                    console.log(xhr.responseText);
-                    window.location.href = 'user/logout.do';
-                }
-            });
-        }
+	    $(document).ready(function() {
+	    	
+	    	let token = localStorage.getItem('jwtToken');
+	
+	
+	 	    if (!token) {
+	 	    	alert('Token Expired');
+	         	localStorage.removeItem('jwtToken');
+	             console.log(xhr.responseText);
+	             window.location.href = 'user/logout.do';
+	 	    }
+	
+	 	    $.ajax({
+	 	        url: 'verifyToken.do', 
+	 	        type: 'GET',
+	 	        beforeSend: function(xhr) {
+	 	            xhr.setRequestHeader("Authorization", "Bearer " + token);
+	 	        },
+	 	        success: function(response) {
+	 	            console.log('Token is valid');
+	 	        },
+	 	        error: function() {
+	 	            alert('Token is invalid or expired');
+	 	            localStorage.removeItem('jwtToken');
+	 	            window.location.href = 'user/logout.do'; 
+	 	        }
+	 	    });
+	 	    
+	        function changeComment(event) {
+	            event.preventDefault();
+	            let formData = $('#newComment').serialize();
+	            let token = localStorage.getItem('jwtToken');
+	            $.ajax({
+	                url: 'comment/changeComment.do',
+	                type: 'POST',
+	                data: formData,
+	                success: function(response) {
+	                    if(response.status === "success") {
+	                        alert("comment 변경 완료");
+	                        window.location.href = 'post/detailPost.do?postId=' + $('[name="postId"]').val();
+	                    } else {
+	                        alert("Error");
+	                    }
+	                },
+	                error: function(error) {
+    	            	alert('ajax error', error);
+    	            }
+	            });
+	        }
+	    });
     </script>
 
 </body>
