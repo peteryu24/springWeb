@@ -51,6 +51,7 @@
 	 	            window.location.href = 'user/logout.do'; 
 	 	        }
 	 	    });
+	    });
 	        function writeComment(event) {
 	            event.preventDefault();
 	            let formData = $('#writecommentForm').serialize();
@@ -72,7 +73,7 @@
 		            }
 	            });
 	        }
-	    });
+
     </script>
 
 </body>
