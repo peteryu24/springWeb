@@ -6,6 +6,7 @@
     <base href="http://localhost:8080/egov11/">
     <title>Edit your Post</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <link rel="stylesheet" href="/egov11/css/post/changePost.css">
 </head>
 <body>
@@ -13,7 +14,7 @@
     <div class="editForm">
         <form id="changeContent" onsubmit="return changeContent(event)">
             <label for="newContent">Edit your Content</label>
-            
+            <sec:csrfInput/>
             <!-- 숨겨서 전송 -->
             <input type="hidden" name="postId" value="${postId}"> 
 		    
