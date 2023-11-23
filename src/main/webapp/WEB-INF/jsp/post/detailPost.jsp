@@ -191,7 +191,7 @@
 		        error: function(error) {
 	            	alert('ajax error', error);
 	            }
-		    });       
+		});       
 	    }
 
 	    
