@@ -69,6 +69,8 @@
  	            window.location.href = 'user/logout.do'; 
  	        }
  	    });
+	});
+ 	    
 
 		baseMapCreator.createDaumMap();
 
@@ -81,7 +83,7 @@
 			layerController.onOffLayer(layerName);
 		});
 
-	});
+
 </script>
 
 <style>

@@ -93,12 +93,14 @@
 	        success: function(response) {
 	            console.log('Token is valid');
 	        },
-	        error: function() {
+	        error: function(error) {
 	            alert('Token is invalid or expired');
+	            console.log(error);
 	            localStorage.removeItem('jwtToken');
 	            window.location.href = 'user/logout.do'; 
 	        }
 	    });
+	}); 
 
 		
 	    $('#editPostButton').click(function(){
@@ -189,9 +191,9 @@
 		        error: function(error) {
 	            	alert('ajax error', error);
 	            }
-		    });       
+		});       
 	    }
-	}); 
+
 	    
 
 </script>

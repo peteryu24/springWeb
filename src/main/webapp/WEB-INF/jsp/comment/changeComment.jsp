@@ -56,11 +56,11 @@
 	 	            window.location.href = 'user/logout.do'; 
 	 	        }
 	 	    });
+	    });
 	 	    
 	        function changeComment(event) {
 	            event.preventDefault();
 	            let formData = $('#newComment').serialize();
-	            let token = localStorage.getItem('jwtToken');
 	            $.ajax({
 	                url: 'comment/changeComment.do',
 	                type: 'POST',
@@ -78,7 +78,7 @@
     	            }
 	            });
 	        }
-	    });
+
     </script>
 
 </body>
