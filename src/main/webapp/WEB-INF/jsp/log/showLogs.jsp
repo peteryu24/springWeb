@@ -45,6 +45,33 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
+			
+			let token = localStorage.getItem('jwtToken');
+
+
+     	    if (!token) {
+     	    	alert('Token Expired');
+             	localStorage.removeItem('jwtToken');
+                 console.log(xhr.responseText);
+                 window.location.href = 'user/logout.do';
+     	    }
+
+     	    $.ajax({
+     	        url: 'verifyToken.do', 
+     	        type: 'GET',
+     	        beforeSend: function(xhr) {
+     	            xhr.setRequestHeader("Authorization", "Bearer " + token);
+     	        },
+     	        success: function(response) {
+     	            console.log('Token is valid');
+     	        },
+     	        error: function() {
+     	            alert('Token is invalid or expired');
+     	            localStorage.removeItem('jwtToken');
+     	            window.location.href = 'user/logout.do'; 
+     	        }
+     	    });
+     	    
 			showLogs();
 		});
 
