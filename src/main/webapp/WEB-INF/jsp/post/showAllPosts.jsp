@@ -64,31 +64,6 @@
     <script type="text/javascript">
 	    $(document).ready(function() {
 	    	
-        	let token = localStorage.getItem('jwtToken');
-
-
-     	    if (!token) {
-     	    	alert('Token Expired');
-             	localStorage.removeItem('jwtToken');
-                 console.log(xhr.responseText);
-                 window.location.href = 'user/logout.do';
-     	    }
-
-     	    $.ajax({
-     	        url: 'verifyToken.do', 
-     	        type: 'GET',
-     	        beforeSend: function(xhr) {
-     	            xhr.setRequestHeader("Authorization", "Bearer " + token);
-     	        },
-     	        success: function(response) {
-     	            console.log('Token is valid');
-     	        },
-     	        error: function() {
-     	            alert('Token is invalid or expired');
-     	            localStorage.removeItem('jwtToken');
-     	            window.location.href = 'user/logout.do'; 
-     	        }
-     	    });
 	    	
 	    	let writeFlag = "${writeFlag}";
 
@@ -114,11 +89,15 @@
  
         function showPosts() {
         	
+        	let token = localStorage.getItem('jwtToken');
         	
             $.ajax({
                 url: "post/showPosts.do",
                 type: "GET",
                 dataType: "json",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
                 data: {
                     sortType: sessionStorage.getItem('orderBy'),
                     currentPage: sessionStorage.getItem('currentPage'),
@@ -130,9 +109,12 @@
                     pageController.setTotalPage(fetchedTotalPage);
                     generatePageNumbers(fetchedTotalPage);
                 },
-                error: function(error) {
-	            	alert('ajax error', error);
-	            }
+                error: function(xhr, status, error) {          
+                	alert('Token Expired');
+                	logoutAndClearSession();
+                	console.log(xhr.reponseText);
+                    console.log("Error: " + error);
+                }
             });
         }
 
