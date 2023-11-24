@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
+@RequestMapping("/token")
 public class TokenVerifier {
 
     @Autowired
