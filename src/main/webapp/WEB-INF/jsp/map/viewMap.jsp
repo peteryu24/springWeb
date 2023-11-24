@@ -43,45 +43,78 @@
 	let map = null;
 
 	$(document).ready(function() {
-		
-		let token = localStorage.getItem('jwtToken');
+        let token = localStorage.getItem('jwtToken');
+        let csrfToken = $("input[name='_csrf']").val();
+
+        if (!token) {
+            refreshToken();
+        } else {
+            verifyToken();
+        }
+    });
+
+    function verifyToken(attemptedRefresh = false) {
+        let token = localStorage.getItem('jwtToken');
+        if (token) {
+            $.ajax({
+                url: 'token/verifyToken.do',
+                type: 'GET',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function(response) {
+                    console.log('Token is valid');
+                },
+                error: function(error) {
+                    if (!attemptedRefresh) {
+                    	console.log('from verifyToken to refreshToken');
+                        refreshToken();
+                    } else {
+                    	console.log('from verifyToken to handleTokenError');
+                        handleTokenError();
+                    }
+                }
+            });
+        }
+    }
+
+    function refreshToken() {
+        $.ajax({
+            url: 'token/refreshToken.do',
+            type: 'GET',
+            success: function(response) {
+                console.log('Success in refreshToken. Token is => ', response.token);
+                localStorage.setItem('jwtToken', response.token);
+                console.log('Refreshed token');
+                verifyToken(true);
+            },
+            error: function(xhr) {
+                console.log('Error in refreshToken');
+                handleTokenError(xhr);
+            }
+        });
+    }
 
 
- 	    if (!token) {
- 	    	alert('Token Expired');
-         	localStorage.removeItem('jwtToken');
-             console.log(xhr.responseText);
-             window.location.href = 'user/logout.do';
- 	    }
+    function handleTokenError(xhr = null) {
+        let errorMessage = xhr ? (xhr.status + ': ' + xhr.statusText) : 'Unknown error';
+        alert('Authentication failed - ' + errorMessage);
 
- 	    $.ajax({
- 	        url: 'token/verifyToken.do', 
- 	        type: 'GET',
- 	        beforeSend: function(xhr) {
- 	            xhr.setRequestHeader("Authorization", "Bearer " + token);
- 	        },
- 	        success: function(response) {
- 	            console.log('Token is valid');
- 	        },
- 	        error: function() {
- 	            alert('Token is invalid or expired');
- 	            localStorage.removeItem('jwtToken');
- 	            window.location.href = 'user/logout.do'; 
- 	        }
- 	    });
-	});
+        localStorage.removeItem('jwtToken');
+        window.location.href = 'user/logout.do';
+    }
  	    
 
-		baseMapCreator.createDaumMap();
+	baseMapCreator.createDaumMap();
 
-		mapSourceCreator.createSource();
-		mapLayerCreator.createLayer();
-		
-		// #toggle 내부의 모든 button 요소를 대상으로 클릭 이벤트
-		$("#toggle > button").on("click", function() {
-			const layerName = $(this).attr("id"); // 클릭한 버튼의 id 가져오기
-			layerController.onOffLayer(layerName);
-		});
+	mapSourceCreator.createSource();
+	mapLayerCreator.createLayer();
+	
+	// #toggle 내부의 모든 button 요소를 대상으로 클릭 이벤트
+	$("#toggle > button").on("click", function() {
+		const layerName = $(this).attr("id"); // 클릭한 버튼의 id 가져오기
+		layerController.onOffLayer(layerName);
+	});
 
 
 </script>
@@ -119,7 +152,7 @@
 </style>
 
 <meta charset="UTF-8">
-<base href="http://localhost:8080/egov11/">
+<base href="http://localhost:8080/helloMonkey/">
 <title>Map</title>
 </head>
 <!-- favicon.ico 404 오류  임시 해결 -->
