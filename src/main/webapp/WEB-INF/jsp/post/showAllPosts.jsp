@@ -227,44 +227,50 @@
         });
 		
     	// 사용자가 선택한 정렬 방식 넘겨줌
-		$('#sortButton').on('click', function() {
-			let selectedSort = $('#sortSelect').val();
-			pageController.setOrderBy(selectedSort);
-			pageController.setCurrentPage('1');
-			
-			showPosts();
-			
-		});
-    	
-		$('#searchButton').on('click', function() {
-		    let keyword = $('#searchInput').val();
-		    pageController.setSearchedKeyword(keyword); // 검색어 sessionStorage에 저장
-		    pageController.setCurrentPage('1'); // 검색 후 첫 페이지로 초기화
-		    showPosts();
-		});
-			
-		function confirmUnregister() {
-		    if (window.confirm("탈퇴하시겠습니까?")) {
-		    	sessionStorage.clear();
-		        location.href = 'user/unregister.do';
-		    }
-		}
+	$('#sortButton').on('click', function() {
+		let selectedSort = $('#sortSelect').val();
+		pageController.setOrderBy(selectedSort);
+		pageController.setCurrentPage('1');
 		
-		function logoutAndClearSession() {
-	        sessionStorage.clear(); 
-	        localStorage.removeItem('jwtToken');
-	        location.href = 'user/logout.do'; 
-	    }
+		showPosts();
 		
-	    function resetAndClearSession() {
-	        sessionStorage.clear(); 
-	        location.href = 'post/goShowAllPosts.do'; 
+	});
+
+	$('#searchButton').on('click', function() {
+	    let keyword = $('#searchInput').val();
+	    pageController.setSearchedKeyword(keyword); // 검색어 sessionStorage에 저장
+	    pageController.setCurrentPage('1'); // 검색 후 첫 페이지로 초기화
+	    showPosts();
+	});
+		
+	function confirmUnregister() {
+	    if (window.confirm("탈퇴하시겠습니까?")) {
+		sessionStorage.clear();
+		location.href = 'user/unregister.do';
 	    }
-	    
-	    function clearSessionAndViewLog() {
-	    	sessionStorage.clear();
-	    	location.href = 'log/goShowLogs.do';
-	    }
+	}
+	
+	function deleteCookie(name) {
+	    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	}
+
+	function logoutAndClearSession() {
+	    sessionStorage.clear(); 
+	    localStorage.removeItem('jwtToken');
+	    deleteCookie('refreshToken'); // 쿠키 삭제 로직 추가
+	    location.href = 'user/logout.do'; 
+	}
+
+	
+        function resetAndClearSession() {
+	     sessionStorage.clear(); 
+	     location.href = 'post/goShowAllPosts.do'; 
+        }
+    
+        function clearSessionAndViewLog() {
+	    sessionStorage.clear();
+	    location.href = 'log/goShowLogs.do';
+        }
 	
     </script>
 </body>
