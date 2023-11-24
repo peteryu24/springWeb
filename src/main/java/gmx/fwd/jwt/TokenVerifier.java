@@ -44,6 +44,7 @@ public class TokenVerifier {
     public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Cookie[] cookies = request.getCookies();
         String refreshToken = null;
+
         for (Cookie cookie : cookies) {
             if ("refreshToken".equals(cookie.getName())) {
                 refreshToken = cookie.getValue();
@@ -54,18 +55,27 @@ public class TokenVerifier {
         if (refreshToken == null || !tokenProvider.validateToken(refreshToken)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired refresh token");
         }
-        
-        String username = tokenProvider.getUsernameFromToken(refreshToken);
-        
-        String role = authentication.getAuthorities().stream()
-                .findFirst()
-                .map(grantedAuthority -> grantedAuthority.getAuthority())
-                .orElse("ROLE_USER");
-        String newAccessToken = tokenProvider.createRefreshToken(username, role);
 
-        return ResponseEntity.ok(Collections.singletonMap("token", newAccessToken));
+        try {
+            String username = tokenProvider.getUsernameFromToken(refreshToken);
+            String role = authentication.getAuthorities().stream()
+                    .findFirst()
+                    .map(grantedAuthority -> grantedAuthority.getAuthority())
+                    .orElse("ROLE_USER");
+            String newAccessToken = tokenProvider.createToken(username, role);
+            String newRefreshToken = tokenProvider.createRefreshToken(username, role); // 새 리프레시 토큰 생성
+
+            // 리프레시 토큰을 쿠키에 저장
+            Cookie newRefreshCookie = new Cookie("refreshToken", newRefreshToken);
+            newRefreshCookie.setHttpOnly(true);
+            newRefreshCookie.setMaxAge(24 * 60 * 60); // 예: 24시간
+            response.addCookie(newRefreshCookie);
+
+            return ResponseEntity.ok(Collections.singletonMap("token", newAccessToken));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing refresh token: " + e.getMessage());
+        }
     }
-
 
 
 }
