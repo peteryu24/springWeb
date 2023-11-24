@@ -4,10 +4,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <base href="http://localhost:8080/egov11/">
+    <base href="http://localhost:8080/helloMonkey/">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-    <link rel="stylesheet" href="/egov11/css/comment/writeComment.css">
+    <link rel="stylesheet" href="/helloMonkey/css/comment/writeComment.css">
     <title>Write a Comment</title>
 </head>
 <body>
@@ -27,54 +27,86 @@
 
     <script>
 	    $(document).ready(function() {
-	    	
-	    	let token = localStorage.getItem('jwtToken');
+	        let token = localStorage.getItem('jwtToken');
+	        csrfToken = $("input[name='_csrf']").val();
 	
-	
-	 	    if (!token) {
-	 	    	alert('Token Expired');
-	         	localStorage.removeItem('jwtToken');
-	             console.log(xhr.responseText);
-	             window.location.href = 'user/logout.do';
-	 	    }
-	
-	 	    $.ajax({
-	 	        url: 'token/verifyToken.do', 
-	 	        type: 'GET',
-	 	        beforeSend: function(xhr) {
-	 	            xhr.setRequestHeader("Authorization", "Bearer " + token);
-	 	        },
-	 	        success: function(response) {
-	 	            console.log('Token is valid');
-	 	        },
-	 	        error: function() {
-	 	            alert('Token is invalid or expired');
-	 	            localStorage.removeItem('jwtToken');
-	 	            window.location.href = 'user/logout.do'; 
-	 	        }
-	 	    });
+	        if (!token) {
+	            refreshToken();
+	        } else {
+	            verifyToken();
+	        }
 	    });
-	        function writeComment(event) {
-	            event.preventDefault();
-	            let formData = $('#writecommentForm').serialize();
-	            let token = localStorage.getItem('jwtToken');
+	
+	    function verifyToken(attemptedRefresh = false) {
+	        let token = localStorage.getItem('jwtToken');
+	        if (token) {
 	            $.ajax({
-	                url: 'comment/writeComment.do',
-	                type: 'POST',
-	                data: formData,
+	                url: 'token/verifyToken.do',
+	                type: 'GET',
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+	                },
 	                success: function(response) {
-	                	if(response.status === "success"){
-	                		alert("댓글 작성 완료");
-	                    window.location.href = 'post/detailPost.do?postId=' + $('[name="postId"]').val();
-	                	}else{
-	                		alert("댓글 작성 실패");
-	                	}
+	                    console.log('Token is valid');
 	                },
 	                error: function(error) {
-		            	alert('ajax error', error);
-		            }
+	                    if (!attemptedRefresh) {
+	                        refreshToken();
+	                    } else {
+	                        handleTokenError();
+	                    }
+	                }
 	            });
 	        }
+	    }
+	
+	    function refreshToken() {
+	        $.ajax({
+	            url: 'token/refreshToken.do',
+	            type: 'GET',
+	            success: function(response) {
+	                console.log('Success in refreshToken. Token is => ', response.token);
+	                localStorage.setItem('jwtToken', response.token);
+	                console.log('Refreshed token');
+	                verifyToken(true);
+	            },
+	            error: function(xhr) {
+	                console.log('Error in refreshToken');
+	                handleTokenError(xhr);
+	            }
+	        });
+	    }
+
+	
+	    function handleTokenError(xhr = null) {
+	        let errorMessage = xhr ? (xhr.status + ': ' + xhr.statusText) : 'Unknown error';
+	        alert('Authentication failed - ' + errorMessage);
+
+	        localStorage.removeItem('jwtToken');
+	        window.location.href = 'user/logout.do';
+	    }
+		
+        function writeComment(event) {
+            event.preventDefault();
+            let formData = $('#writecommentForm').serialize();
+            let token = localStorage.getItem('jwtToken');
+            $.ajax({
+                url: 'comment/writeComment.do',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                	if(response.status === "success"){
+                		alert("댓글 작성 완료");
+                    window.location.href = 'post/detailPost.do?postId=' + $('[name="postId"]').val();
+                	}else{
+                		alert("댓글 작성 실패");
+                	}
+                },
+                error: function(error) {
+	            	alert('ajax error', error);
+	            }
+            });
+        }
 
     </script>
 
