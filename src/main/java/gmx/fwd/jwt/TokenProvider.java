@@ -1,6 +1,6 @@
 package gmx.fwd.jwt;
 
-import io.jsonwebtoken.Claims; 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,8 +28,12 @@ public class TokenProvider {
 	@Value("${security.jwt.token.secret-key:secret-key}")
 	private String secretKey;
 
-	@Value("${security.jwt.token.expire-length:300000}") // 5min
+	@Value("${security.jwt.token.expire-length:10000}") // 1min: 60000, 5min: 300000, 24h: 86400000
 	private long validityInMilliseconds;
+	
+	@Value("${security.jwt.token.refresh-expire-length:20000}") 
+	private long refreshValidityInMilliseconds;
+
 	
 	private String encodedSecretKey;
 
@@ -39,8 +43,8 @@ public class TokenProvider {
 		encodedSecretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 	
-	//JWT 생성 / 검증 시 init에서 인코딩 한 secretKey를 Base64 디코딩하여 사용
-	public String createToken(String username, String role) { // 토큰 생성
+	//JWT 생성, 검증 시 init에서 인코딩 한 secretKey를 Base64 디코딩하여 사용
+	protected String createToken(String username, String role) { // 토큰 생성
 
 		Claims claims = Jwts.claims().setSubject(username);
 		claims.put("auth", role);
@@ -58,11 +62,25 @@ public class TokenProvider {
 				    .compact();
 	}
 	
-	private String getUsernameFromToken(String token) {
+	protected String createRefreshToken(String username, String role) {
+	    Claims claims = Jwts.claims().setSubject(username);
+	    claims.put("auth", role);
+
+	    Date now = new Date();
+	    Date validity = new Date(now.getTime() + refreshValidityInMilliseconds);
+
+	    return Jwts.builder()
+	                .setClaims(claims)
+	                .setIssuedAt(now)
+	                .setExpiration(validity)
+	                .signWith(SignatureAlgorithm.HS256, Base64.getDecoder().decode(encodedSecretKey))
+	                .compact();
+	}
+
+	protected String getUsernameFromToken(String token) {
 	    byte[] decodedSecretKey = Base64.getDecoder().decode(encodedSecretKey);
 	    return Jwts.parser().setSigningKey(decodedSecretKey).parseClaimsJws(token).getBody().getSubject();
 	}
-
 
 	public Authentication getAuthentication(String token) {
 		String username = getUsernameFromToken(token); // 토큰으로부터 사용자 이름 추출
@@ -71,14 +89,16 @@ public class TokenProvider {
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
 	
-	public boolean validateToken(String token) {
+	// init에서 인코딩 한 secretKey를 Base64 디코딩하여 사용
+	protected boolean validateToken(String token) {
 	    try {
 	    	byte[] decodedSecretKey = Base64.getDecoder().decode(encodedSecretKey);
 	        Jwts.parser().setSigningKey(decodedSecretKey).parseClaimsJws(token);
 	        return true;
 	    } catch (JwtException | IllegalArgumentException e) {
-	        throw new JwtException("Expired or invalid JWT token"); // 기타 JWT 관련 예외 처리
+	        throw new JwtException("Expired or invalid JWT token" + e.getMessage()); 
 	    }
 	}
+
 
 }
