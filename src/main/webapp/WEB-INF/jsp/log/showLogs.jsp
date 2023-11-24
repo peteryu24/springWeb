@@ -4,10 +4,10 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<base href="http://localhost:8080/egov11/">
-	<script src="/egov11/js/post/pageController.js"></script>
+	<base href="http://localhost:8080/helloMonkey/">
+	<script src="/helloMonkey/js/post/pageController.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<link rel="stylesheet" href="/egov11/css/log/showLogs.css">
+	<link rel="stylesheet" href="/helloMonkey/css/log/showLogs.css">
 	<title>Show Logs</title>
 </head>
 <body>
@@ -45,39 +45,68 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			
-			let token = localStorage.getItem('jwtToken');
-
-
-     	    if (!token) {
-     	    	alert('Token Expired');
-             	localStorage.removeItem('jwtToken');
-                 console.log(xhr.responseText);
-                 window.location.href = 'user/logout.do';
-     	    }
-
-     	    $.ajax({
-     	        url: 'token/verifyToken.do', 
-     	        type: 'GET',
-     	        beforeSend: function(xhr) {
-     	            xhr.setRequestHeader("Authorization", "Bearer " + token);
-     	        },
-     	        success: function(response) {
-     	            console.log('Token is valid');
-     	        },
-     	        error: function() {
-     	            alert('Token is invalid or expired');
-     	            localStorage.removeItem('jwtToken');
-     	            window.location.href = 'user/logout.do'; 
-     	        }
-     	    });
-     	    
-			showLogs();
-		});
-
+	        let token = localStorage.getItem('jwtToken');
+	        let csrfToken = $("input[name='_csrf']").val();
+	
+	        if (!token) {
+	            refreshToken();
+	        } else {
+	            verifyToken();
+	        }
+	        showLogs();
+	    });
+	
+	    function verifyToken(attemptedRefresh = false) {
+	        let token = localStorage.getItem('jwtToken');
+	        if (token) {
+	            $.ajax({
+	                url: 'token/verifyToken.do',
+	                type: 'GET',
+	                beforeSend: function(xhr) {
+	                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+	                },
+	                success: function(response) {
+	                    console.log('Token is valid');
+	                },
+	                error: function(error) {
+	                    if (!attemptedRefresh) {
+	                    	console.log('from verifyToken to refreshToken');
+	                        refreshToken();
+	                    } else {
+	                    	console.log('from verifyToken to handleTokenError');
+	                        handleTokenError();
+	                    }
+	                }
+	            });
+	        }
+	    }
+	
+	    function refreshToken() {
+	        $.ajax({
+	            url: 'token/refreshToken.do',
+	            type: 'GET',
+	            success: function(response) {
+	                console.log('Success in refreshToken. Token is => ', response.token);
+	                localStorage.setItem('jwtToken', response.token);
+	                console.log('Refreshed token');
+	                verifyToken(true);
+	            },
+	            error: function(xhr) {
+	                console.log('Error in refreshToken');
+	                handleTokenError(xhr);
+	            }
+	        });
+	    }
+	
+	
+	    function handleTokenError(xhr = null) {
+	        let errorMessage = xhr ? (xhr.status + ': ' + xhr.statusText) : 'Unknown error';
+	        alert('Authentication failed - ' + errorMessage);
+	
+	        localStorage.removeItem('jwtToken');
+	        window.location.href = 'user/logout.do';
+	    }
 		function showLogs(){
-			
-			let token = localStorage.getItem('jwtToken');
 			
 			$.ajax({
 				url: "log/showLogs.do",
