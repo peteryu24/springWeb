@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import gmx.fwd.jwt.TokenProvider;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,11 +33,26 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
         // JWT 토큰 생성
         String token = tokenProvider.createToken(username, role);
-        System.out.println(token + " token is");
+        System.out.println("token is " + token);
 
         // 응답에 JWT 토큰 추가
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Content-Type", "application/json");
         response.getWriter().write("{\"token\":\"" + token + "\"}");
+        
+        
+        // refresh token
+        String refreshToken = tokenProvider.createRefreshToken(username,role);
+        System.out.println("refresh Token is " + refreshToken);
+
+        // httpOnly 쿠키에 리프레쉬 토큰 저장
+        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setPath("/"); // 애플리케이션의 모든 경로에서 쿠키 사용
+        refreshCookie.setMaxAge(24 * 60 * 60); // 예: 24시간
+        //refreshCookie.setSecure(false); // 개발 환경이 HTTP인 경우 false로 설정
+        response.addCookie(refreshCookie);
+
     }
 }
+
