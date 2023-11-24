@@ -141,9 +141,7 @@
 		    <artifactId>spring-security-taglibs</artifactId>
 		    <version>4.2.2.RELEASE</version>
 		</dependency>
-				
-
-		
+						
 		<!--  AOP  -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
