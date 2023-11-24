@@ -22,7 +22,7 @@ public class TokenFilter extends GenericFilterBean {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) req;
         HttpServletResponse httpResponse = (HttpServletResponse) res;
-
+        
         try {
         	
             String token = resolveToken(httpRequest);
@@ -35,12 +35,10 @@ public class TokenFilter extends GenericFilterBean {
             filterChain.doFilter(req, res);
             
         } catch (JwtException e) {
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 상태 코드 설정
-            httpResponse.getWriter().write("Unauthorized: " + e.getMessage());
+            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized: " + e.getMessage());
             return; 
         } catch (Exception e) {
-            httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500 상태 코드 설정
-            httpResponse.getWriter().write("Internal Server Error: " + e.getMessage());
+            httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error: " + e.getMessage());
             return; 
         }
     }
