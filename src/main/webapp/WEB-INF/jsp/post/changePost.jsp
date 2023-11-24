@@ -41,7 +41,7 @@
 	 	    }
 	
 	 	    $.ajax({
-	 	        url: 'verifyToken.do', 
+	 	        url: 'toekn/verifyToken.do', 
 	 	        type: 'GET',
 	 	        beforeSend: function(xhr) {
 	 	            xhr.setRequestHeader("Authorization", "Bearer " + token);
