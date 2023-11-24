@@ -37,5 +37,3 @@ csrf
 https://stackoverflow.com/questions/21397939/spring-security-3-2-csrf-support-for-multipart-requests
 <br><br>
 
-## showAllPosts.jsp 페이지 로드(게시물 가져올 때)시 토큰 검증함
-## changePost.jsp 게시글 수정에 대해서는 토큰과 권한 검증. 뒤로가기에 는 검증하지 않음(어차피 뒤로가기에 해당하는 detailPosts에서 게시글 가져올 때 검증하기에 자동으로 막힘)
