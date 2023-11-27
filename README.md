@@ -1,3 +1,11 @@
+web project
+- spring과 더욱 친해지기 위해 만들어본 게시판 + openlayers
+- 회원가입 로그인
+-  게시판, 댓글  crud
+-  log
+-  jwt token, session
+-  security
+-  openlayers
 ```
 🌱 peter-web 
 ├─ src
