@@ -75,10 +75,7 @@ public class TokenVerifier {
             String newRefreshToken = tokenProvider.createRefreshToken(username, role); // 새 리프레시 토큰 생성
 
             // 리프레시 토큰이 유효할 때 새 리프레시 토큰을 쿠키에 저장
-            Cookie newRefreshCookie = new Cookie("refreshToken", newRefreshToken);
-            newRefreshCookie.setHttpOnly(true);
-            newRefreshCookie.setPath("/");
-            newRefreshCookie.setMaxAge(60 * 60 * 24); // 1 week
+            Cookie newRefreshCookie = tokenProvider.createRefreshTokenCookie(newRefreshToken);
             response.addCookie(newRefreshCookie);
 
             return ResponseEntity.ok(Collections.singletonMap("token", newAccessToken));
