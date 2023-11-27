@@ -23,10 +23,10 @@ public class TokenProvider {
     @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
 
-    @Value("${security.jwt.token.expire-length:10000}") // 1min: 60000, 5min: 300000, 24h: 86400000
+    @Value("${security.jwt.token.expire-length:60000}") // 1min: 60000, 5min: 300000, 24h: 86400000
     private long validityInMilliseconds;
     
-    @Value("${security.jwt.token.refresh-expire-length:30000}") 
+    @Value("${security.jwt.token.refresh-expire-length:300000}") 
     private long refreshValidityInMilliseconds;
 
     // JWT 생성 시 사용
