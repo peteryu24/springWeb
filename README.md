@@ -1,39 +1,34 @@
-## Authentication auth = tokenProvider.getAuthentication(token);
-<br>
-Authentication: 
-<br>
-org.springframework.security.authentication.UsernamePasswordAuthenticationToken@441d024a: 
-<br>
-Principal: org.springframework.security.core.userdetails.User@7a: 
-<br>
-Username: z; 
-<br>
-Password: [PROTECTED]; 
-<br>
-Enabled: true; 
-<br>
-AccountNonExpired: true; 
-<br>
-credentialsNonExpired: true; 
-<br>
-AccountNonLocked: true; 
-<br>
-Granted Authorities: ROLE_USER; 
-<br>
-Credentials: [PROTECTED]; 
-<br>
-Authenticated: true; 
-<br>
-Details: null; 
-<br>
-Granted Authorities: ROLE_USER
-
-<br><br>
-https://jake-seo-dev.tistory.com/59
-<br>
-javadoc
-<br><br>
-csrf
-https://stackoverflow.com/questions/21397939/spring-security-3-2-csrf-support-for-multipart-requests
-<br><br>
+```
+📦 peter-web
+├─ src
+│  └─ main
+│     ├─ java
+│     │  └─ gmx
+│     │     └─ fwd
+│     │        ├─ aop : log with aop
+│     │        ├─ controller : controller folder
+│     │        ├─ interceptor : session based interceptor(now using token)
+│     │        ├─ jwt : settings for jwt token
+│     │        ├─ mapper : mapper interface
+│     │        ├─ security : spring security
+│     │        ├─ service : service folder
+│     │        └─ vo : known as DAO(Data Access Object)
+│     ├─ resources
+│     │  ├─ db : query for creating tables
+│     │  ├─ gmx
+│     │  │  ├─ context : folder for settings.xml
+│     │  ├─ mapper : xml based query using mybatis
+│     │  └─ properties : properties for file downloads
+│     └─ webapp
+│        ├─ WEB-INF
+│        │  ├─ config : place for dispatcher-servlet.xml
+│        │  ├─ jsp : folder for jsp files
+│        │  └─ web.xml : web settings
+│        ├─ css : css folder
+│        ├─ error : error.jsp
+│        └─ js
+│           ├─ lib : library for js
+│           ├─ map : js for map(OpenLayers)
+│           └─ post : paging settings
+```
 
