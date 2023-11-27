@@ -1,10 +1,8 @@
 package gmx.fwd.jwt;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.beans.factory.annotation.Autowired;
-import gmx.fwd.jwt.TokenProvider;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +18,8 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-    	System.out.println("onAuthentuactionSucess in MyAuthenticationSuccessHandler is called");
-    	
+        System.out.println("onAuthentuactionSucess in MyAuthenticationSuccessHandler is called");
+        
         // 인증된 사용자의 username 추출
         String username = authentication.getName();
         
@@ -40,19 +38,12 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         response.addHeader("Content-Type", "application/json");
         response.getWriter().write("{\"token\":\"" + token + "\"}");
         
-        
         // refresh token
-        String refreshToken = tokenProvider.createRefreshToken(username,role);
+        String refreshToken = tokenProvider.createRefreshToken(username, role);
         System.out.println("refresh Token is " + refreshToken);
 
-        // httpOnly 쿠키에 리프레쉬 토큰 저장
-        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setPath("/"); // 애플리케이션의 모든 경로에서 쿠키 사용
-        refreshCookie.setMaxAge(24 * 60 * 60); // 예: 24시간
-        //refreshCookie.setSecure(false); // 개발 환경이 HTTP인 경우 false로 설정
+        // 로그인 성공 했을 때 httpOnly 쿠키에 리프레쉬 토큰 저장
+        Cookie refreshCookie = tokenProvider.createRefreshTokenCookie(refreshToken);
         response.addCookie(refreshCookie);
-
     }
 }
-

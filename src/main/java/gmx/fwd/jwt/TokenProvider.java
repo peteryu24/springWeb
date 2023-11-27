@@ -14,6 +14,8 @@ import gmx.fwd.security.MyUserDetailService;
 
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+
 @Component
 public class TokenProvider {
     
@@ -23,10 +25,10 @@ public class TokenProvider {
     @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
 
-    @Value("${security.jwt.token.expire-length:10000}") // 1min: 60000, 5min: 300000, 24h: 86400000
+    @Value("${security.jwt.token.expire-length:60000}") // 1min: 60000, 5min: 300000, 24h: 86400000
     private long validityInMilliseconds;
     
-    @Value("${security.jwt.token.refresh-expire-length:30000}") 
+    @Value("${security.jwt.token.refresh-expire-length:300000}") 
     private long refreshValidityInMilliseconds;
 
     // JWT 생성 시 사용
@@ -59,6 +61,15 @@ public class TokenProvider {
                     .setExpiration(validity)
                     .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
                     .compact();
+    }
+    
+    protected Cookie createRefreshTokenCookie(String refreshToken) {
+        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setPath("/"); // 애플리케이션의 모든 경로에서 쿠키 사용
+        refreshCookie.setMaxAge(60 * 60 * 24 * 7); // 1 week
+      //refreshCookie.setSecure(false); // 개발 환경이 HTTP인 경우 false로 설정
+        return refreshCookie;
     }
 
     protected String getUsernameFromToken(String token) {
