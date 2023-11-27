@@ -43,11 +43,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         System.out.println("refresh Token is " + refreshToken);
 
         // 로그인 성공 했을 때 httpOnly 쿠키에 리프레쉬 토큰 저장
-        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setPath("/"); // 애플리케이션의 모든 경로에서 쿠키 사용
-        refreshCookie.setMaxAge(60 * 60 * 24); // 1 week
-        //refreshCookie.setSecure(false); // 개발 환경이 HTTP인 경우 false로 설정
+        Cookie refreshCookie = tokenProvider.createRefreshTokenCookie(refreshToken);
         response.addCookie(refreshCookie);
     }
 }
