@@ -78,7 +78,7 @@ public class TokenProvider {
         return Jwts.parser().setSigningKey(secretKey.getBytes()).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public Authentication getAuthentication(String token) {
+    protected Authentication getAuthentication(String token) {
         String username = getUsernameFromToken(token); // 토큰으로부터 사용자 이름 추출
         UserDetails userDetails = userDetailService.loadUserByUsername(username); // 사용자 상세 정보 로드
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
