@@ -1,5 +1,5 @@
 ```
-📦 peter-web
+🌱 peter-web 
 ├─ src
 │  └─ main
 │     ├─ java
