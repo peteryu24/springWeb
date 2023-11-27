@@ -1,11 +1,10 @@
 web project
 - spring과 더욱 친해지기 위해 만들어본 게시판 + openlayers
 - 회원가입 로그인
--  게시판, 댓글  crud
--  log
--  jwt token, session
--  security
--  openlayers
+- 게시판, 댓글  crud
+- aop log
+- security + jwt token + csrf token
+- openlayers
 
 forntend
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
