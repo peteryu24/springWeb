@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +22,6 @@ public class TokenVerifier {
 
     @GetMapping("/verifyToken.do")
     public ResponseEntity<?> verifyToken(HttpServletRequest request) {
-
         String token = request.getHeader("Authorization");
         
         if (token == null || !token.startsWith("Bearer ")) {
@@ -42,19 +40,30 @@ public class TokenVerifier {
     
     @GetMapping("/refreshToken.do")
     public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        Cookie[] cookies = request.getCookies();
         String refreshToken = null;
+        boolean refreshTokenFlag = false;
 
-        for (Cookie cookie : cookies) {
-            if ("refreshToken".equals(cookie.getName())) {
-                refreshToken = cookie.getValue();
-                break;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("refreshToken".equals(cookie.getName())) {
+                    refreshToken = cookie.getValue();
+                    refreshTokenFlag = true;
+                    break;
+                }
             }
         }
 
-        if (refreshToken == null || !tokenProvider.validateToken(refreshToken)) {
+        if (!refreshTokenFlag || refreshToken == null || !tokenProvider.validateToken(refreshToken)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired refresh token");
         }
+
+        // 삭제할 쿠키 생성
+        Cookie deleteCookie = new Cookie("refreshToken", null);
+        deleteCookie.setHttpOnly(true);
+        deleteCookie.setPath("/");
+        deleteCookie.setMaxAge(0); // 쿠키 만료 시간을 0으로 설정하여 즉시 삭제
+        response.addCookie(deleteCookie);
 
         try {
             String username = tokenProvider.getUsernameFromToken(refreshToken);
@@ -65,10 +74,11 @@ public class TokenVerifier {
             String newAccessToken = tokenProvider.createToken(username, role);
             String newRefreshToken = tokenProvider.createRefreshToken(username, role); // 새 리프레시 토큰 생성
 
-            // 리프레시 토큰을 쿠키에 저장
+            // 리프레시 토큰이 유효할 때 새 리프레시 토큰을 쿠키에 저장
             Cookie newRefreshCookie = new Cookie("refreshToken", newRefreshToken);
             newRefreshCookie.setHttpOnly(true);
-            newRefreshCookie.setMaxAge(24 * 60 * 60); // 예: 24시간
+            newRefreshCookie.setPath("/");
+            newRefreshCookie.setMaxAge(60 * 60 * 24); // 1 week
             response.addCookie(newRefreshCookie);
 
             return ResponseEntity.ok(Collections.singletonMap("token", newAccessToken));
@@ -76,6 +86,4 @@ public class TokenVerifier {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing refresh token: " + e.getMessage());
         }
     }
-
-
 }
