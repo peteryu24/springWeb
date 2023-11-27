@@ -64,6 +64,8 @@
     <script type="text/javascript">
 	    $(document).ready(function() {
 	    	
+	    	/* deleteCookie('refreshToken'); */
+	    	
 	    	let token = localStorage.getItem('jwtToken');
 	        let csrfToken = $("input[name='_csrf']").val();
 	
@@ -250,11 +252,17 @@
 		    }
 		}
 		
+		/* function deleteCookie(name) {
+		    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1998 00:00:01 GMT;';
+		} */
+
 		function logoutAndClearSession() {
-	        sessionStorage.clear(); 
-	        localStorage.removeItem('jwtToken');
-	        location.href = 'user/logout.do'; 
-	    }
+		    sessionStorage.clear(); 
+		    localStorage.removeItem('jwtToken');
+		   /*  deleteCookie('refreshToken'); // 쿠키 삭제 로직 추가 */
+		    location.href = 'user/logout.do'; 
+		}
+
 		
 	    function resetAndClearSession() {
 	        sessionStorage.clear(); 
