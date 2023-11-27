@@ -30,5 +30,6 @@
 │           ├─ lib : library for js
 │           ├─ map : js for map(OpenLayers)
 │           └─ post : paging settings
+├─ pom.xml : maven settings
 ```
 
