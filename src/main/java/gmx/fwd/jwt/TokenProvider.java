@@ -2,7 +2,7 @@ package gmx.fwd.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts; 
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +20,7 @@ import javax.servlet.http.Cookie;
 public class TokenProvider {
     
     @Autowired
-    MyUserDetailService userDetailService;
+    private MyUserDetailService userDetailService;
 
     @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
@@ -30,6 +30,8 @@ public class TokenProvider {
     
     @Value("${security.jwt.token.refresh-expire-length:300000}") 
     private long refreshValidityInMilliseconds;
+    
+    private static final int COOKIE_MAX_AGE = 60 * 60 * 24; // a day
 
     // JWT 생성 시 사용
     protected String createToken(String username, String role) { // 토큰 생성
@@ -67,7 +69,7 @@ public class TokenProvider {
         Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
         refreshCookie.setHttpOnly(true);
         refreshCookie.setPath("/"); // 애플리케이션의 모든 경로에서 쿠키 사용
-        refreshCookie.setMaxAge(60 * 60 * 24 * 7); // 1 week
+        refreshCookie.setMaxAge(COOKIE_MAX_AGE); // a day
       //refreshCookie.setSecure(false); // 개발 환경이 HTTP인 경우 false로 설정
         return refreshCookie;
     }
