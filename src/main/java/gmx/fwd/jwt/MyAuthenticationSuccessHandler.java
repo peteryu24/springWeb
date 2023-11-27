@@ -8,8 +8,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(MyAuthenticationSuccessHandler.class);
 
     @Autowired
     private TokenProvider tokenProvider;
@@ -18,31 +22,31 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        System.out.println("onAuthentuactionSucess in MyAuthenticationSuccessHandler is called");
+        logger.info("Authentication Success for user: {}", authentication.getName());
         
-        // 인증된 사용자의 username 추출
         String username = authentication.getName();
-        
-        // 사용자 역할 (예: "ROLE_USER") 추출
         String role = authentication.getAuthorities().stream()
                 .findFirst()
                 .map(grantedAuthority -> grantedAuthority.getAuthority())
                 .orElse("ROLE_USER");
 
-        // JWT 토큰 생성
-        String token = tokenProvider.createToken(username, role);
-        System.out.println("token is " + token);
+        addJwtTokenToResponse(response, username, role);
+        addRefreshTokenToCookie(response, username, role);
+    }
 
-        // 응답에 JWT 토큰 추가
+    private void addJwtTokenToResponse(HttpServletResponse response, String username, String role) throws IOException {
+        String token = tokenProvider.createToken(username, role);
+        logger.debug("JWT Token is {}", token);
+
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Content-Type", "application/json");
         response.getWriter().write("{\"token\":\"" + token + "\"}");
-        
-        // refresh token
-        String refreshToken = tokenProvider.createRefreshToken(username, role);
-        System.out.println("refresh Token is " + refreshToken);
+    }
 
-        // 로그인 성공 했을 때 httpOnly 쿠키에 리프레쉬 토큰 저장
+    private void addRefreshTokenToCookie(HttpServletResponse response, String username, String role) {
+        String refreshToken = tokenProvider.createRefreshToken(username, role);
+        logger.debug("Refresh Token is {}", refreshToken);
+
         Cookie refreshCookie = tokenProvider.createRefreshTokenCookie(refreshToken);
         response.addCookie(refreshCookie);
     }
