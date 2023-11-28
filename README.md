@@ -5,17 +5,17 @@
 - aop log
 - security + jwt token + csrf token
 - openlayers
-
-### forntend
+## toolkit
+#### forntend
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
 
-### backend
+#### backend
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 
-### db & etc
+#### db & etc
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 <img src="https://img.shields.io/badge/Openlayers-1F6B75?style=for-the-badge&logo=openlayers&logoColor=white">
 <br>
@@ -27,6 +27,7 @@
 - [security](https://github.com/peteryu24/peter-web/tree/c87e34295e7d621410b18cfa8ffcd2cd17aae438/src/main/java/gmx/fwd/security)
 - [DB 최적화](https://dudefromkorea.tistory.com/16)
 
+### project layout
 ```
 🌱 peter-web 
 ├─ src
@@ -38,7 +39,7 @@
 │     │        ├─ service : service folder
 │     │        ├─ mapper : mapper interface(linked with mapper.xml - mybatis)
 │     │        ├─ interceptor : session based interceptor(now using token)
-│     │        ├─ aop : log with aop
+│     │        ├─ aop : logger using aop
 │     │        ├─ jwt : settings for jwt token
 │     │        ├─ security : spring security
 │     │        └─ vo : known as DAO(Data Access Object)
