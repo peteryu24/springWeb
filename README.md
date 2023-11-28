@@ -26,7 +26,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 - [project preview](https://github.com/peteryu24/peter-web/tree/aaadd5c265ab29c0706ab9951a103482b20e4031/src/main)
 - [aop](https://github.com/peteryu24/peter-web/tree/e29422021dfa9aee75a75eef748cc1751043f762/src/main/java/gmx/fwd/aop)
 - [DB Optimization](https://dudefromkorea.tistory.com/16)
-- [security + jwt token(refreshToken)](https://github.com/peteryu24/peter-web/tree/97c94479d3d6f80d3dbbed11a02ccd47e75e9e3a/src/main/java/gmx/fwd/jwt)
+- [security + jwt token(refreshToken)](https://github.com/peteryu24/peter-web/tree/2480a362ed58cad1ed566b2de935709f72ea9433/src/main/java/gmx/fwd/jwt)
 - [Prevent View Count Manipulation](https://dudefromkorea.tistory.com/15)
 <br>
 
