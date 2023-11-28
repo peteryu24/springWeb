@@ -1,4 +1,4 @@
-## Aop를 이용한 로그 남기기
+## log using AOP
 @Aspect 어노테이션을 감지할 수 있도록 **AopInit.java** 에서 @Configuration, @EnableAspectJAutoProxy 명시
 <br><br>
 그리고 **WriteLog.java** 에서는 @Aspect, @Component를 명시
