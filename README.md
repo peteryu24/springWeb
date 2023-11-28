@@ -66,6 +66,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 │           └─ post : paging settings
 └─ pom.xml : maven settings
 ```
+<br>
 
 ## before using ☢️
 make sure `<base href="http://localhost:8080/yourWantedTitleHere/">` is unified on every jsp
