@@ -28,7 +28,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 - [jwt](https://github.com/peteryu24/peter-web/tree/97c94479d3d6f80d3dbbed11a02ccd47e75e9e3a/src/main/java/gmx/fwd/jwt)
 - [security](https://github.com/peteryu24/peter-web/tree/97c94479d3d6f80d3dbbed11a02ccd47e75e9e3a/src/main/java/gmx/fwd/security)
 - [DB Optimization](https://dudefromkorea.tistory.com/16)
-- [Preventing View Count Manipulation](https://dudefromkorea.tistory.com/15)
+- [Prevent View Count Manipulation](https://dudefromkorea.tistory.com/15)
 <br>
 
 ## project layout 📌
