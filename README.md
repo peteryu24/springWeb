@@ -23,7 +23,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 <br>
 
 ## feature details
-- [project preview](https://github.com/peteryu24/peter-web/tree/359551bdda6cd3d0662c07c9358716bb6bf7a0b6/src/main)
+- [project preview](https://github.com/peteryu24/peter-web/tree/aaadd5c265ab29c0706ab9951a103482b20e4031/src/main)
 - [aop](https://github.com/peteryu24/peter-web/tree/4ec63c5d1ad5d36fcc953d56e03dd78e9988cfb2/src/main/java/gmx/fwd/aop)
 - [조회수 어뷰징 방지](https://dudefromkorea.tistory.com/15)
 - [jwt](https://github.com/peteryu24/peter-web/tree/c87e34295e7d621410b18cfa8ffcd2cd17aae438/src/main/java/gmx/fwd/jwt)
