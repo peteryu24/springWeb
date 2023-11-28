@@ -39,7 +39,7 @@
 │     │        ├─ service : service folder
 │     │        ├─ mapper : mapper interface(linked with mapper.xml - mybatis)
 │     │        ├─ interceptor : session based interceptor(now using token)
-│     │        ├─ aop : log with aop
+│     │        ├─ aop : logger using aop
 │     │        ├─ jwt : settings for jwt token
 │     │        ├─ security : spring security
 │     │        └─ vo : known as DAO(Data Access Object)
