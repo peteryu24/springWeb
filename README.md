@@ -1,5 +1,7 @@
 # web project🌱
 spring과 더욱 친해지기 위해 만들어본 게시판(feat. openlayers)
+<br>
+<br>
 ## features
 - 회원가입 로그인
 - 게시판, 댓글  crud
@@ -11,17 +13,17 @@ spring과 더욱 친해지기 위해 만들어본 게시판(feat. openlayers)
 ![javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-
 #### backend
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-
 #### db & etc
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 <img src="https://img.shields.io/badge/Openlayers-1F6B75?style=for-the-badge&logo=openlayers&logoColor=white">
 <br>
+<br>
 ## DEMO
 <img src="https://github.com/peteryu24/peter-web/assets/67302252/6e7b6451-3395-45a5-bc41-eae8f68d2914">
-
+<br>
+<br>
 
 ## feature details
 - [project view](https://github.com/peteryu24/peter-web/tree/359551bdda6cd3d0662c07c9358716bb6bf7a0b6/src/main)
@@ -31,6 +33,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판(feat. openlayers)
 - [jwt](https://github.com/peteryu24/peter-web/tree/c87e34295e7d621410b18cfa8ffcd2cd17aae438/src/main/java/gmx/fwd/jwt)
 - [security](https://github.com/peteryu24/peter-web/tree/c87e34295e7d621410b18cfa8ffcd2cd17aae438/src/main/java/gmx/fwd/security)
 - [DB 최적화](https://dudefromkorea.tistory.com/16)
+<br>
 
 ## project layout
 ```
