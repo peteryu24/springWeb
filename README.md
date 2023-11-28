@@ -2,6 +2,10 @@
 spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 <br>
 <br>
+## software 🌑
+- java : 1.8
+- spring : 4.2.2.RELEASE
+- DB : postgreSQL  42.2.20
 ## features 📂
 - 회원가입, 로그인
 - 게시판, 댓글, 첨부파일 CRUD
