@@ -1,12 +1,12 @@
-## web project🌱
+# web project🌱
 spring과 더욱 친해지기 위해 만들어본 게시판(feat. openlayers)
-### features
+## features
 - 회원가입 로그인
 - 게시판, 댓글  crud
 - aop log
 - security + jwt token + csrf token
 - openlayers
-### toolkit
+## toolkit
 #### forntend
 ![javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
@@ -19,11 +19,11 @@ spring과 더욱 친해지기 위해 만들어본 게시판(feat. openlayers)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 <img src="https://img.shields.io/badge/Openlayers-1F6B75?style=for-the-badge&logo=openlayers&logoColor=white">
 <br>
-### DEMO
+## DEMO
 <img src="https://github.com/peteryu24/peter-web/assets/67302252/6e7b6451-3395-45a5-bc41-eae8f68d2914">
 
 
-### feature details
+## feature details
 - [project view](https://github.com/peteryu24/peter-web/tree/359551bdda6cd3d0662c07c9358716bb6bf7a0b6/src/main)
 - [aop](https://github.com/peteryu24/peter-web/tree/4ec63c5d1ad5d36fcc953d56e03dd78e9988cfb2/src/main/java/gmx/fwd/aop)
 - [조회수 어뷰징 방지](https://dudefromkorea.tistory.com/15)
@@ -32,7 +32,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판(feat. openlayers)
 - [security](https://github.com/peteryu24/peter-web/tree/c87e34295e7d621410b18cfa8ffcd2cd17aae438/src/main/java/gmx/fwd/security)
 - [DB 최적화](https://dudefromkorea.tistory.com/16)
 
-### project layout
+## project layout
 ```
 🌱 peter-web 
 ├─ src
