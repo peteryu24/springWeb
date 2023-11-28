@@ -1,5 +1,5 @@
 # web project🌱
-spring과 더욱 친해지기 위해 만들어본 게시판(feat. openlayers)
+spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 <br>
 <br>
 ## features
