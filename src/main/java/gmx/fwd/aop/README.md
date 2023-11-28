@@ -9,6 +9,9 @@ with the following, @Aspect and @Component annotated at ***WriteLog.java***
 ![error for transaction](https://github.com/peteryu24/peter-web/assets/67302252/6150225e-78e3-4cb5-9a18-fe0185401b28)
 ### logger at login (@AfterReturning)
 ![logger logic](https://github.com/peteryu24/peter-web/assets/67302252/26ac04f6-f215-4b01-acfe-73c9e5552fb0)
+### pom.xml settings 
+![pom for aop](https://github.com/peteryu24/peter-web/assets/67302252/4c5f077b-b619-4f1d-849a-91be640bd2d7)
+
 
 
 
