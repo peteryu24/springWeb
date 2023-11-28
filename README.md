@@ -60,10 +60,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 │        │  └─ web.xml : web settings
 │        ├─ css : css folder
 │        ├─ error : error.jsp
-│        └─ js
-│           ├─ lib : library for js
-│           ├─ map : js for map(OpenLayers)
-│           └─ post : paging settings
+│        └─ js : folder for js
 └─ pom.xml : maven settings
 ```
 <br>
