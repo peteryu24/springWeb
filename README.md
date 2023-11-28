@@ -1,5 +1,6 @@
 ## web project🌱
 - spring과 더욱 친해지기 위해 만들어본 게시판(feat. openlayers)
+### features
 - 회원가입 로그인
 - 게시판, 댓글  crud
 - aop log
@@ -22,7 +23,7 @@
 <img src="https://github.com/peteryu24/peter-web/assets/67302252/6e7b6451-3395-45a5-bc41-eae8f68d2914">
 
 
-### 프로젝트 설명
+### feature details
 - [project view](https://github.com/peteryu24/peter-web/tree/359551bdda6cd3d0662c07c9358716bb6bf7a0b6/src/main)
 - [aop](https://github.com/peteryu24/peter-web/tree/4ec63c5d1ad5d36fcc953d56e03dd78e9988cfb2/src/main/java/gmx/fwd/aop)
 - [조회수 어뷰징 방지](https://dudefromkorea.tistory.com/15)
