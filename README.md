@@ -6,7 +6,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 - 회원가입, 로그인
 - 게시판, 댓글, 첨부파일 CRUD
 - logger with AOP
-- security + jwt token + csrf token
+- security + jwt token(refresh token) + csrf token
 - openlayers
 ## toolkit
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a>
