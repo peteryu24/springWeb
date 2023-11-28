@@ -4,7 +4,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 <br>
 ## features
 - 회원가입, 로그인
-- 게시판, 댓글, 첨부파일 crud
+- 게시판, 댓글, 첨부파일 CRUD
 - aop log
 - security + jwt token + csrf token
 - openlayers
