@@ -17,7 +17,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a>
 <br>
 <br>
-## DEMO
+## DEMO 👁️‍🗨️
 <img src="https://github.com/peteryu24/peter-web/assets/67302252/6e7b6451-3395-45a5-bc41-eae8f68d2914">
 <br>
 <br>
@@ -33,7 +33,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 
 ## project layout
 ```
-🌱 peter-web 
+🌱 peter-web
 ├─ src
 │  └─ main
 │     ├─ java
@@ -67,6 +67,6 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 └─ pom.xml : maven settings
 ```
 
-## before using
+## before using ⚠️
 make sure `<base href="http://localhost:8080/yourWantedTitleHere/">` is unified on every jsp
 
