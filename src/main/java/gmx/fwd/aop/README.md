@@ -1,7 +1,7 @@
 ## logger using AOP
-@Configuration, @EnableAspectJAutoProxy written in ***AopInit.java***, can now seek @Aspect annotation
+@Configuration, @EnableAspectJAutoProxy annotated in ***AopInit.java***, can now seek @Aspect annotation
 <br><br>
-그리고 **WriteLog.java** 에서는 @Aspect, @Component를 명시
+and @Aspect, @Component annotated at ***WriteLog.java***
 <br><br>
 ### declare logger Object & set Pointcut
 ![logger](https://github.com/peteryu24/peter-web/assets/67302252/7da0a524-cb73-4ff6-bcf3-83546da0a4ed)
