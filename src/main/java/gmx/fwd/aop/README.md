@@ -1,5 +1,5 @@
-## log using AOP
-@Aspect 어노테이션을 감지할 수 있도록 **AopInit.java** 에서 @Configuration, @EnableAspectJAutoProxy 명시
+## logger using AOP
+@Configuration, @EnableAspectJAutoProxy written in ***AopInit.java***, can now seek @Aspect annotation
 <br><br>
 그리고 **WriteLog.java** 에서는 @Aspect, @Component를 명시
 <br><br>
