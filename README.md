@@ -19,7 +19,7 @@
 <img src="https://img.shields.io/badge/Openlayers-1F6B75?style=for-the-badge&logo=openlayers&logoColor=white">
 <br>
 ### DEMO
-<img src="https://github.com/peteryu24/peter-web/assets/67302252/4f717278-33e9-442d-9958-40f80ecc4931">
+<img src="https://github.com/peteryu24/peter-web/assets/67302252/be7cb6e3-0ab6-492f-ac6a-6902065c6300">
 
 
 ### 프로젝트 설명
