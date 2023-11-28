@@ -20,6 +20,7 @@
 <img src="https://img.shields.io/badge/Openlayers-1F6B75?style=for-the-badge&logo=openlayers&logoColor=white">
 <br>
 프로젝트 설명
+- [project view](https://github.com/peteryu24/peter-web/tree/359551bdda6cd3d0662c07c9358716bb6bf7a0b6/src/main)
 - [aop](https://github.com/peteryu24/peter-web/tree/4ec63c5d1ad5d36fcc953d56e03dd78e9988cfb2/src/main/java/gmx/fwd/aop)
 - [조회수 어뷰징 방지](https://dudefromkorea.tistory.com/15)
 - [gis](https://github.com/peteryu24/peter-web/tree/be1ff5ef19d269f9671344d32999f1dced1e5d1c/src/main/webapp/WEB-INF/jsp/map)
