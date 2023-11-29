@@ -65,6 +65,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 │        ├─ css : css folder
 │        ├─ error : error.jsp
 │        └─ js : folder for js(s)
+│    
 └─ pom.xml : maven settings
 ```
 <br>
