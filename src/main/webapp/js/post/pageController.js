@@ -3,27 +3,28 @@ var pageController = (function() {
 		setCurrentPage : function(page) {
 			currentPage = page;
 			sessionStorage.setItem('currentPage', currentPage);
-			console.log("currentPage session setting됨!")
+			console.log("currentPage session set!")
 		},
 		setTotalPage : function(page) {
 			totalPage = page;
 			sessionStorage.setItem('totalPage', totalPage);
-			console.log("setTotalPage session setting됨!")
+			console.log(totalPage);
+			console.log("setTotalPage session set!")
 		},
 		setOrderBy : function(order) {
 			orderBy = order;
 			sessionStorage.setItem('orderBy', orderBy);
-			console.log("orderBy session setting됨!")
+			console.log("orderBy session set!")
 		},
 		setSearchedKeyword : function(Keyword) {
 			searchedKeyword = Keyword;
 			sessionStorage.setItem('searchedKeyword', searchedKeyword);
-			console.log("searchedKeyword session setting됨!")
+			console.log("searchedKeyword session set!")
 		},
 		setCategory: function(category) {
         	category = category;
         	sessionStorage.setItem('category', category);
-        	console.log("setCategory session setting됨!")
+        	console.log("setCategory session set!")
         }
 	};
 })();
