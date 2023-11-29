@@ -17,7 +17,7 @@ if the current token expires, a ***new token*** is given through ***response hea
 ### refresh token example in DevTools
 ![refresh token](https://github.com/peteryu24/peter-web/assets/67302252/75910c89-9bff-418b-a42a-520598b9bdf4)
 <br>
-### whole process in DevTools : verifyToken.do (401 Unauthorized) -> refreshToken.do -> verifyToken.do
+### the whole process in DevTools <br>verifyToken.do (401 Unauthorized) -> refreshToken.do -> verifyToken.do
 ![whole process](https://github.com/peteryu24/peter-web/assets/67302252/2d81c04a-819d-4860-bddd-1acff3fb93f4)
 <br>
 ### logic for the whole process in jsp
