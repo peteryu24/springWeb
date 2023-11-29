@@ -8,7 +8,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 - DB : postgreSQL  42.2.20
 ## features 📂
 - register, login
-- posting, commenting, file CRUD
+- posts, comments, file CRUD
 - logger with AOP
 - security + jwt token(refresh token) + csrf token
 - openlayers
