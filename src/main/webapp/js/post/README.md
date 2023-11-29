@@ -4,6 +4,8 @@ created a setter for page number, category, searched keyword, etc... (sessionSto
 the created setter is called whenever the referring button is activated
 <br><br>
 lastly, the process of retrieving the actual posts with AJAX is ***minimized*** <br>being called only once, and it sends what is stored in ***sessionStorage***
+<br><br>
+
 ### setter for pages
 ![page setter](https://github.com/peteryu24/peter-web/assets/67302252/a40d4cb0-3bf7-455b-a68b-7d7dfde1d159)
 <br>
