@@ -32,7 +32,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 - [cheap query](https://dudefromkorea.tistory.com/16)
 - [page control](https://github.com/peteryu24/peter-web/tree/dfaf8e39c8ac3f2c9036f1eb2336b7d18de01231/src/main/webapp/js/post)
 - [avoid view count abuse](https://dudefromkorea.tistory.com/15)
-- [jwt token + spring security](https://github.com/peteryu24/peter-web/tree/f6e36484b904c3f47a71d8b716c5edb53b3de1e7/src/main/java/gmx/fwd/jwt)
+- [jwt token + spring security](https://github.com/peteryu24/peter-web/tree/b1b17697b6440258118683e80ee743bc568a1c49/src/main/java/gmx/fwd/jwt)
 <br>
 
 ## project layout 📌
