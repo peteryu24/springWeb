@@ -51,7 +51,7 @@ spring과 더욱 친해지기 위해 만들어본 게시판 (feat. openlayers)
 │     │        ├─ aop : logger using aop
 │     │        ├─ jwt : settings for jwt token
 │     │        ├─ security : spring security
-│     │        └─ vo : known as DAO(Data Access Object)
+│     │        └─ vo : getter, setter for value object
 │     ├─ resources
 │     │  ├─ db : query for creating tables
 │     │  ├─ gmx
