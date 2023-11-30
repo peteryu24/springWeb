@@ -5,7 +5,7 @@ the first controller checks validity by getting the current user who is wishing 
 <br><br>
 if the two result matches, it directs to a different controller leading to action
 <br><br>
-can be changed into session if the web is based on session and works the same for comments
+can be changed into session if the web is based on session, and works the same way for comments also
 <br><br>
 
 ### two controllers for the action
