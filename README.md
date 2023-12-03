@@ -1,5 +1,5 @@
 # web project🌱
-to be more friendly with spring (feat. openlayers) 
+to be more friendly with Mr.Spring (feat. openlayers) 
 <br>
 <br>
 ## software 🌑
