@@ -7,5 +7,5 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true) // CGLIB 프록시 활성화
 public class AopInit {
-    
+       
 }
