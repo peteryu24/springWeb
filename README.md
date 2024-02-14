@@ -8,7 +8,7 @@ to be more friendly with Mr.Spring (feat. openlayers)
 ## features 📂 
 - (un)register, login(log out)
 - posts, comments, file CRUD
-- logger with AOP
+- logger with AOP 
 - security + jwt token(refresh token) + csrf token
 - openlayers
 ## toolkit 🛠️
