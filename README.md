@@ -6,7 +6,7 @@ to be more friendly with Mr.Spring (feat. openlayers)
 - spring : 4.2.2.RELEASE
 - DB : postgreSQL  42.2.20
 ## features 📂 
-- (un)register, login(log out)
+- (un)register, login(log out) 
 - posts, comments, file CRUD
 - logger with AOP 
 - security + jwt token(refresh token) + csrf token
