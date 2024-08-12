@@ -7,7 +7,7 @@ to be more friendly with Mr.Spring (feat. openlayers)
 - DB : postgreSQL  42.2.20
 ## features 📂 
 - (un)register, login(log out) 
-- posts, comments, file CRUD 
+- posts, comments, file CRUD  
 - logger with AOP 
 - security + jwt token(refresh token) + csrf token
 - openlayers
