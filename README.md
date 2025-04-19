@@ -3,7 +3,7 @@ to be more friendly with Mr.Spring (feat. openlayers)
 <br>    
 ## software 🌑   
 - java : 1.8
-- spring : 4.2.2.RELEASE
+- spring : 4.2.2.RELEASE 
 - DB : postgreSQL  42.2.20
 ## features 📂  
 - (un)register, login(log out)  
